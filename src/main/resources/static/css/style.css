@@ -1,0 +1,83 @@
+body {
+    margin: 0;
+}
+
+.btn-entrada {
+    background: #363636;
+    border: none;
+    padding: 10px;
+    position: absolute;
+    top: 30%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    width: 15%;
+    height: 20%;
+    border-radius: 10px;
+    color: white;
+    font-size: 13pt;
+    cursor: pointer;
+}
+
+.btn-relatorio {
+    background: #363636;
+    border: none;
+    padding: 10px;
+    position: absolute;
+    top: 30%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    width: 15%;
+    height: 20%;
+    border-radius: 10px;
+    color: white;
+    font-size: 13pt;
+    cursor: pointer;
+}
+
+.btn-listar {
+    background: #363636;
+    border: none;
+    padding: 10px;
+    position: absolute;
+    top: 30%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    width: 15%;
+    height: 20%;
+    border-radius: 10px;
+    color: white;
+    font-size: 13pt;
+    cursor: pointer;
+}
+
+.btn-finalizar {
+    background: #363636;
+    border: none;
+    padding: 10px;
+    position: absolute;
+    top: 30%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    width: 15%;
+    height: 20%;
+    border-radius: 10px;
+    color: white;
+    font-size: 13pt;
+    cursor: pointer;
+}
+
+.btn-entrada:hover {
+    background-color: deepskyblue;
+}
+
+.btn-relatorio:hover {
+    background-color: deepskyblue;
+}
+
+.btn-listar:hover {
+    background-color: deepskyblue;
+}
+
+.btn-finalizar:hover {
+    background-color: deepskyblue;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  
+<head>
+	<title>Registrar Entrada</title>
+	<link rel="stylesheet" href="css/registro.css"/>
+</head>
+<body>
+	<div class="main-login">
+        <div class="card-login">
+            <div class="label">
+                <label for="titulo">Entrada de Veículos</label>
+                <br>
+            </div>
+            <form method="post">
+              <div class="text-field">
+                <br>
+                <br>
+                <input type="datetime-local" value="" name="horaEntrada" placeholder="Data de Entrada">
+                <br>
+                <input type="text" value="" name="veiculo" placeholder="Veículo">
+                <br>
+                <input type="text" value="" name="placa" placeholder="Placa">
+                <br>
+                <input type="text" value="" name="nomeMotorista" placeholder="Nome do Motorista">
+                <br>
+                <input type="number" value="" name="numeroApt" placeholder="Número do Apartamento">
+                <br>
+                <br>
+                <button type="submit" class="btn-login">Salvar</button>
+             </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
