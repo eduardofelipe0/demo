@@ -3,6 +3,8 @@ package com.example.demo.model;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -36,6 +38,8 @@ public class Usuario implements UserDetails, Serializable{
 	@NotNull
 	@Size(max = 70)
 	private String senha;
+	
+	// private String cargo;
 	
 	public String getNome() {
 		return nome;
@@ -98,4 +102,21 @@ public class Usuario implements UserDetails, Serializable{
 		// TODO Auto-generated method stub
 		return true;
 	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(nome, nomeUsuario, roles, senha);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		return Objects.equals(nome, other.nome) && Objects.equals(nomeUsuario, other.nomeUsuario)
+				&& Objects.equals(roles, other.roles) && Objects.equals(senha, other.senha);
+	}
+	
 }

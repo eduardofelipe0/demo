@@ -12,7 +12,8 @@ import com.example.demo.repository.EntradaRepository;
 @Controller
 public class EntradaController {
 	
-	@Autowired EntradaRepository rer;
+	@Autowired 
+	private EntradaRepository rer;
 	
 	@RequestMapping(value="/registroEntrada", method=RequestMethod.GET )
 	public String form() {
@@ -20,7 +21,7 @@ public class EntradaController {
 	}
 	
 	@RequestMapping(value="/registroEntrada", method=RequestMethod.POST )
-	public String form(Entrada entrada) {
+	public String registrarEntrada(Entrada entrada) {
 		
 		rer.save(entrada);
 		
@@ -28,11 +29,17 @@ public class EntradaController {
 	}
 	
 	@RequestMapping("/entradas")
-	public ModelAndView listar() {
+	public ModelAndView listarEntradas() {
 		ModelAndView mv = new ModelAndView("entrada/listaEntradas");
 		Iterable<Entrada> entradas = rer.findAll();
 		mv.addObject("entradas", entradas);
 		return mv;
 	}
 	
+	/*@RequestMapping(value="/{nome}", method=RequestMethod.GET )
+	public ModelAndView buscarEntradas() {
+		ModelAnd
+	}
+	
+	*/
 }
