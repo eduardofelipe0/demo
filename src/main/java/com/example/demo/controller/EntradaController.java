@@ -36,6 +36,13 @@ public class EntradaController {
 		return mv;
 	}
 	
+	@RequestMapping("/deletar")
+	public String deletarEvento(String placa){
+		Entrada entrada = rer.findByPlaca(placa);
+		rer.delete(entrada);
+		return "redirect:/entradas";
+	}
+	
 	/*@RequestMapping(value="/{nome}", method=RequestMethod.GET )
 	public ModelAndView buscarEntradas() {
 		ModelAnd
