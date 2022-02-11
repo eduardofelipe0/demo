@@ -1,9 +1,13 @@
 package com.example.demo.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import com.example.demo.exception.NegocioException;
 
 @Entity
 public class Entrada implements Serializable{
@@ -11,7 +15,7 @@ public class Entrada implements Serializable{
 	public static final long serialVersionUID = 1L;
 	
 	@NotNull
-	private String horaEntrada;
+	private LocalDateTime horaEntrada;
 	
 	@NotNull
 	private String veiculo;
@@ -26,10 +30,15 @@ public class Entrada implements Serializable{
 	@NotNull
 	private String numeroApt;	
 	
-	public String getHoraEntrada() {
+	@Enumerated(EnumType.STRING)
+	private StatusEntrada status;
+	
+	private LocalDateTime horaSaida;
+	
+	public LocalDateTime getHoraEntrada() {
 		return horaEntrada;
 	}
-	public void setHoraEntrada(String horaEntrada) {
+	public void setHoraEntrada(LocalDateTime horaEntrada) {
 		this.horaEntrada = horaEntrada;
 	}
 	public String getVeiculo() {
@@ -55,6 +64,36 @@ public class Entrada implements Serializable{
 	}
 	public void setNumeroApt(String numeroApt) {
 		this.numeroApt = numeroApt;
+	}
+	
+	public StatusEntrada getStatus() {
+		return status;
+	}
+	public void setStatus(StatusEntrada status) {
+		this.status = status;
+	}
+	public LocalDateTime getHoraSaida() {
+		return horaSaida;
+	}
+	public void setHoraSaida(LocalDateTime horaSaida) {
+		this.horaSaida = horaSaida;
+	}
+	
+	public boolean podeSerFinalizada() {
+		return StatusEntrada.SAIDA_PENDENTE.equals(getStatus());
+	}
+	
+	public boolean naoPodeSerFinalizada() {
+		return !podeSerFinalizada();
+	}
+	
+	public void finalizar() {
+		if(naoPodeSerFinalizada()) {
+			throw new NegocioException("Entrada não pode ser finalizada");
+		}
+		
+		setStatus(StatusEntrada.FINALIZADO);
+		setHoraSaida(LocalDateTime.now());
 	}
 	
 	@Override
