@@ -3,6 +3,9 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.model.Entrada;
+import com.example.demo.model.Usuario;
 import com.example.demo.repository.EntradaRepository;
 import com.example.demo.service.GestaoEntradaService;
+import com.example.demo.service.GestaoUsuarioService;
 
 @Controller
 @RequestMapping("/entradas")
@@ -21,6 +26,8 @@ public class EntradaController {
 	private EntradaRepository entradaRepository;
 	@Autowired
 	private GestaoEntradaService gestaoEntradaService;
+	@Autowired
+	private GestaoUsuarioService gestaoUsuarioService;
 	
 	@RequestMapping(value="/new", method=RequestMethod.GET )
 	public ModelAndView formulario() {
@@ -68,4 +75,7 @@ public class EntradaController {
 		entradaRepository.delete(entrada);
 		return listarEntradas();
 	}
+	
+	//espaço reservado para o método finalizar;
+	
 }
