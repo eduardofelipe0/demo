@@ -1,8 +1,10 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.demo.exception.EntidadeNaoEncontrada;
+
 import com.example.demo.model.Entrada;
 import com.example.demo.repository.EntradaRepository;
 
@@ -15,12 +17,23 @@ public class GestaoEntradaService {
 	public void finalizar(String entradaId) {
 		Entrada entrada = buscar(entradaId);
 		
-		//entrada.finalizar();
+		entrada.setHoraSaida(entrada.getHoraSaida());
 		entradaRepository.save(entrada);
 	}
 		
-	private Entrada buscar(String entradaId) {
-		return entradaRepository.findById(entradaId).
-				orElseThrow(() -> new EntidadeNaoEncontrada("Entrada não Encontrada!"));
+	public Entrada buscar(String id) {
+		return entradaRepository.findById(id).get();
+	}
+	
+	public void remover(String id) {
+		//
+    }
+	
+	public Entrada criar(Entrada entrada) {
+		return entradaRepository.save(entrada);
+	}
+	
+	public List<Entrada> listar() {
+		return (List<Entrada>) entradaRepository.findAll();
 	}
 }

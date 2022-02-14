@@ -1,13 +1,12 @@
 package com.example.demo.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import com.example.demo.exception.NegocioException;
 
 @Entity
 public class Entrada implements Serializable{
@@ -15,7 +14,7 @@ public class Entrada implements Serializable{
 	public static final long serialVersionUID = 1L;
 	
 	@NotNull
-	private LocalDateTime horaEntrada;
+	private String horaEntrada;
 	
 	@NotNull
 	private String veiculo;
@@ -33,12 +32,12 @@ public class Entrada implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private StatusEntrada status;
 	
-	private LocalDateTime horaSaida;
+	private String horaSaida;
 	
-	public LocalDateTime getHoraEntrada() {
+	public String getHoraEntrada() {
 		return horaEntrada;
 	}
-	public void setHoraEntrada(LocalDateTime horaEntrada) {
+	public void setHoraEntrada(String horaEntrada) {
 		this.horaEntrada = horaEntrada;
 	}
 	public String getVeiculo() {
@@ -72,10 +71,10 @@ public class Entrada implements Serializable{
 	public void setStatus(StatusEntrada status) {
 		this.status = status;
 	}
-	public LocalDateTime getHoraSaida() {
+	public String getHoraSaida() {
 		return horaSaida;
 	}
-	public void setHoraSaida(LocalDateTime horaSaida) {
+	public void setHoraSaida(String horaSaida) {
 		this.horaSaida = horaSaida;
 	}
 	
@@ -85,15 +84,6 @@ public class Entrada implements Serializable{
 	
 	public boolean naoPodeSerFinalizada() {
 		return !podeSerFinalizada();
-	}
-	
-	public void finalizar() {
-		if(naoPodeSerFinalizada()) {
-			throw new NegocioException("Entrada não pode ser finalizada");
-		}
-		
-		setStatus(StatusEntrada.FINALIZADO);
-		setHoraSaida(LocalDateTime.now());
 	}
 	
 	@Override

@@ -1,52 +1,71 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.model.Entrada;
 import com.example.demo.repository.EntradaRepository;
+import com.example.demo.service.GestaoEntradaService;
 
 @Controller
+@RequestMapping("/entradas")
 public class EntradaController {
 	
-	@Autowired 
-	private EntradaRepository rer;
+	@Autowired
+	private EntradaRepository entradaRepository;
+	@Autowired
+	private GestaoEntradaService gestaoEntradaService;
 	
-	@RequestMapping(value="/registroEntrada", method=RequestMethod.GET )
-	public String form() {
-		return "entrada/registro";
+	@RequestMapping(value="/new", method=RequestMethod.GET )
+	public ModelAndView formulario() {
+		ModelAndView modelAndView = new ModelAndView();
+		Entrada entrada = new Entrada();
+		modelAndView.setViewName("entrada/registro");
+		modelAndView.addObject("entradaAtual", entrada);
+		return modelAndView;
 	}
 	
-	@RequestMapping(value="/registroEntrada", method=RequestMethod.POST )
-	public String registrarEntrada(Entrada entrada) {
+	@RequestMapping(value="/registrar", method=RequestMethod.POST)
+	public ModelAndView registrar(Entrada entrada) {
+		ModelAndView modelAndView = new ModelAndView();
 		
-		rer.save(entrada);
-		
-		return "redirect:/registroEntrada";
+		try {
+			gestaoEntradaService.criar(entrada);
+			modelAndView.setViewName("index");
+		} catch (Exception e) {
+			modelAndView.setViewName("entrada/registro");
+		}
+		return modelAndView;
 	}
 	
-	@RequestMapping("/entradas")
+	@RequestMapping(value="/listar", method=RequestMethod.GET)
 	public ModelAndView listarEntradas() {
-		ModelAndView mv = new ModelAndView("entrada/listaEntradas");
-		Iterable<Entrada> entradas = rer.findAll();
-		mv.addObject("entradas", entradas);
-		return mv;
+		ModelAndView modelAndView = new ModelAndView();
+		List<Entrada> entradas = gestaoEntradaService.listar();
+		modelAndView.setViewName("entrada/listaEntradas");
+		modelAndView.addObject("entradas", entradas);
+		return modelAndView;
 	}
 	
-	@RequestMapping("/deletar")
-	public String deletarEvento(String placa){
-		Entrada entrada = rer.findByPlaca(placa);
-		rer.delete(entrada);
-		return "redirect:/entradas";
+	@RequestMapping(value="/editar/{entradaId}", method=RequestMethod.GET )
+	public ModelAndView editar(@PathVariable("entradaId") String entradaId) {
+		ModelAndView modelAndView = new ModelAndView();
+		Entrada entrada = gestaoEntradaService.buscar(entradaId);
+		modelAndView.setViewName("entrada/registro");
+		modelAndView.addObject("entradaAtual", entrada);
+		return modelAndView;
 	}
 	
-	/*@RequestMapping(value="/{nome}", method=RequestMethod.GET )
-	public ModelAndView buscarEntradas() {
-		ModelAnd
+	@RequestMapping(value="/excluir/{entradaId}", method=RequestMethod.GET )
+	public ModelAndView deletar(@PathVariable String entradaId) {
+		Entrada entrada = entradaRepository.findById(entradaId).get();
+		entradaRepository.delete(entrada);
+		return listarEntradas();
 	}
-	
-	*/
 }

@@ -13,19 +13,19 @@
                 <label for="titulo">Entrada de Veículos</label>
                 <br>
             </div>
-            <form method="post">
+            <form action="#" th:action="@{/entradas/registrar}" method="post" th:object="${entradaAtual}">
               <div class="text-field">
                 <br>
                 <br>
-                <input type="datetime-local" value="" name="horaEntrada" placeholder="Data de Entrada">
+                <input type="datetime-local" value="" th:field="*{horaEntrada}" placeholder="Data de Entrada">
                 <br>
-                <input type="text" value="" name="veiculo" placeholder="Veículo">
+                <input type="text" value="" th:field="*{veiculo}" placeholder="Veículo">
                 <br>
-                <input type="text" value="" name="placa" placeholder="Placa">
+                <input type="text" value="" th:field="*{placa}" placeholder="Placa">
                 <br>
-                <input type="text" value="" name="nomeMotorista" placeholder="Nome do motorista">
+                <input type="text" value="" th:field="*{nomeMotorista}" placeholder="Nome do motorista">
                 <br>
-                <input type="number" value="" name="numeroApt" placeholder="Número do apartamento">
+                <input type="number" value="" th:field="*{numeroApt}" placeholder="Número do apartamento">
                 <br>
                 <br>
                 <button type="submit" class="btn-login">Salvar</button>
