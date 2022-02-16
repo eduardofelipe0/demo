@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.model.Entrada;
 
 @Repository
-public interface EntradaRepository extends CrudRepository<Entrada, String> {
+public interface EntradaRepository extends CrudRepository<Entrada, Long> {
 	
 	Entrada findByPlaca(String placa);
 

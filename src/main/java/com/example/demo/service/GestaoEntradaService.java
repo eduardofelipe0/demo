@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Entrada;
+import com.example.demo.model.StatusEntrada;
 import com.example.demo.repository.EntradaRepository;
 
 @Service
@@ -14,26 +15,27 @@ public class GestaoEntradaService {
 	@Autowired
 	private EntradaRepository entradaRepository;
 	
-	public void finalizar(String entradaId) {
-		Entrada entrada = buscar(entradaId);
+	public void finalizar(Long id) {
+		Entrada entrada = buscar(id);
 		
-		entrada.setHoraSaida(entrada.getHoraSaida());
+		entrada.finalizar();
 		entradaRepository.save(entrada);
 	}
 		
-	public Entrada buscar(String id) {
+	public Entrada buscar(Long id) {
 		return entradaRepository.findById(id).get();
 	}
 	
-	public void remover(String id) {
-		//
-    }
-	
 	public Entrada criar(Entrada entrada) {
+		entrada.setStatus(StatusEntrada.ABERTA);
 		return entradaRepository.save(entrada);
 	}
 	
 	public List<Entrada> listar() {
 		return (List<Entrada>) entradaRepository.findAll();
+	}
+	
+	public List<Entrada> listaFinalizadas() {
+		return (List<Entrada>) entradaRepository.findAll();	
 	}
 }

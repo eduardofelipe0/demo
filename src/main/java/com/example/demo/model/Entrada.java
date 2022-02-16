@@ -1,17 +1,26 @@
 package com.example.demo.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+
+import com.example.demo.exception.NegocioException;
 
 @Entity
 public class Entrada implements Serializable{
 	
 	public static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	
 	@NotNull
 	private String horaEntrada;
@@ -19,7 +28,6 @@ public class Entrada implements Serializable{
 	@NotNull
 	private String veiculo;
 	
-	@Id
 	@NotNull
 	private String placa;
 	
@@ -32,8 +40,15 @@ public class Entrada implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private StatusEntrada status;
 	
-	private String horaSaida;
+	private LocalDateTime horaSaida;
 	
+	// Getters And Setters
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getHoraEntrada() {
 		return horaEntrada;
 	}
@@ -71,19 +86,11 @@ public class Entrada implements Serializable{
 	public void setStatus(StatusEntrada status) {
 		this.status = status;
 	}
-	public String getHoraSaida() {
+	public LocalDateTime getHoraSaida() {
 		return horaSaida;
 	}
-	public void setHoraSaida(String horaSaida) {
+	public void setHoraSaida(LocalDateTime horaSaida) {
 		this.horaSaida = horaSaida;
-	}
-	
-	public boolean podeSerFinalizada() {
-		return StatusEntrada.SAIDA_PENDENTE.equals(getStatus());
-	}
-	
-	public boolean naoPodeSerFinalizada() {
-		return !podeSerFinalizada();
 	}
 	
 	@Override
@@ -108,5 +115,22 @@ public class Entrada implements Serializable{
 		} else if (!placa.equals(other.placa))
 			return false;
 		return true;
+	}
+	
+	public boolean podeSerFinalizada() {
+		return StatusEntrada.ABERTA.equals(getStatus());
+	}
+	
+	public boolean naoPodeSerFinalizada() {
+		return !podeSerFinalizada();
+	}
+	
+	public void finalizar() {
+		if(naoPodeSerFinalizada()) {
+			throw new NegocioException("Entrada não pode ser finalizada");
+		}
+		
+		setStatus(StatusEntrada.FINALIZADA);
+		setHoraSaida(LocalDateTime.now());
 	}
 }
