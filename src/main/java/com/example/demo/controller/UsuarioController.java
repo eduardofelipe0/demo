@@ -1,38 +1,72 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.model.Entrada;
 import com.example.demo.model.Usuario;
 import com.example.demo.repository.UsuarioRepository;
+import com.example.demo.service.GestaoUsuarioService;
 
 @Controller
+@RequestMapping("/usuarios")
 public class UsuarioController {
 	
 	@Autowired
+	private GestaoUsuarioService gestaoUsuarioService;
+	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-	@RequestMapping(value="/cadastroUsuario", method=RequestMethod.GET )
-	public String form() {
-		return "usuario/cadastroUsuario";
+	@RequestMapping(value="/new", method=RequestMethod.GET )
+	public ModelAndView formulario() {
+		ModelAndView modelAndView = new ModelAndView();
+		Usuario usuario = new Usuario();
+		modelAndView.setViewName("usuario/cadastroUsuario");
+		modelAndView.addObject("usuarioAtual", usuario);
+		return modelAndView;
 	}
 	
-	@RequestMapping(value="/cadastroUsuario", method=RequestMethod.POST )
-	public String form(Usuario usuario) {
+	@RequestMapping(value="/cadastrar", method=RequestMethod.POST)
+	public ModelAndView cadastrar(Usuario usuario) {
+		ModelAndView modelAndView = new ModelAndView();
 		
-		usuarioRepository.save(usuario);
-		
-		return "redirect:/cadastroUsuario";
+		try {
+			gestaoUsuarioService.cadastrar(usuario);
+			modelAndView.setViewName("index");
+		} catch (Exception e) {
+			modelAndView.setViewName("usuario/cadastroUsuario");
+		}
+		return modelAndView;
 	}
 	
-	@RequestMapping("/usuarios")
-	public ModelAndView listarUsuarios() {
-		ModelAndView model = new ModelAndView("usuario/listaUsuarios");
-		Iterable<Usuario> usuarios = usuarioRepository.findAll();
-		model.addObject("usuarios", usuarios);
-		return model;
+	@RequestMapping(value="/listar", method=RequestMethod.GET)
+	public ModelAndView listar() {
+		ModelAndView modelAndView = new ModelAndView();
+		List<Usuario> usuarios = gestaoUsuarioService.listar();
+		modelAndView.setViewName("usuario/listaUsuarios");
+		modelAndView.addObject("usuarios", usuarios);
+		return modelAndView;
+	}
+	
+	@RequestMapping(value="/editar/{id}", method=RequestMethod.GET)
+	public ModelAndView editar(@PathVariable ("id") Long id) {
+		ModelAndView modelAndView = new ModelAndView();
+		Usuario usuario = gestaoUsuarioService.buscar(id);
+		modelAndView.setViewName("usuario/cadastroUsuario");
+		modelAndView.addObject("usuarioAtual", usuario);
+		return modelAndView;
+	}
+	
+	@RequestMapping(value="/excluir/{id}", method=RequestMethod.GET )
+	public ModelAndView remover(@PathVariable Long id) {
+		Usuario usuario = usuarioRepository.findById(id).get();
+		usuarioRepository.delete(usuario);
+		return listar();
 	}
 }

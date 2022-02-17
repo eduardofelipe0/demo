@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -20,17 +22,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class Usuario implements UserDetails, Serializable{
 
 	private static final long serialVersionUID = 1L;
-
-	private String nome;
 	
 	@Id
-	@Size(max = 50)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
+	@NotNull
+	@Size(max = 40)
+	private String nome;
+	
+	@NotNull
+	@Size(max = 30)
 	private String nomeUsuario;
 	
 	@ManyToMany
 	@JoinTable( 
 	        name = "merge", joinColumns = @JoinColumn(
-	        name = "usuario_id", referencedColumnName = "nomeUsuario"), 
+	        name = "usuario_id", referencedColumnName = "id"), 
 	        inverseJoinColumns = @JoinColumn(
 	        name = "role_id", referencedColumnName = "nomeRole")) 
 	private List<Role> roles;
@@ -39,8 +47,12 @@ public class Usuario implements UserDetails, Serializable{
 	@Size(max = 70)
 	private String senha;
 	
-	// private String cargo;
-	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getNome() {
 		return nome;
 	}
@@ -74,12 +86,10 @@ public class Usuario implements UserDetails, Serializable{
 	}
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return this.senha;
 	}
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return this.nomeUsuario;
 	}
 	@Override
@@ -104,7 +114,7 @@ public class Usuario implements UserDetails, Serializable{
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(nome, nomeUsuario, roles, senha);
+		return Objects.hash(id, nome, nomeUsuario, roles, senha);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -115,8 +125,8 @@ public class Usuario implements UserDetails, Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		return Objects.equals(nome, other.nome) && Objects.equals(nomeUsuario, other.nomeUsuario)
-				&& Objects.equals(roles, other.roles) && Objects.equals(senha, other.senha);
-	}
-	
+		return Objects.equals(id, other.id) && Objects.equals(nome, other.nome)
+				&& Objects.equals(nomeUsuario, other.nomeUsuario) && Objects.equals(roles, other.roles)
+				&& Objects.equals(senha, other.senha);
+	}	
 }

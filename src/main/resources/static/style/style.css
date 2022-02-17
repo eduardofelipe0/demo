@@ -2,31 +2,28 @@ body {
     margin: 0;
 }
 
+.card-home {
+	width: 20vw;
+    height: 70vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 80px;
+    background: #B0C4DE;
+    border-radius: 20px;
+    box-shadow: 0px 10px 40px #00000056;
+}
+
 .btn-entrada {
     background: #363636;
     border: none;
     padding: 10px;
     position: absolute;
-    top: 30%;
-    left: 20%;
+    top: 20%;
+    left: 50%;
     transform: translate(-50%, -50%);
-    width: 15%;
-    height: 20%;
-    border-radius: 10px;
-    color: white;
-    font-size: 13pt;
-    cursor: pointer;
-}
-
-.btn-relatorio {
-    background: #363636;
-    border: none;
-    padding: 10px;
-    position: absolute;
-    top: 30%;
-    left: 40%;
-    transform: translate(-50%, -50%);
-    width: 15%;
+    width: 50%;
     height: 20%;
     border-radius: 10px;
     color: white;
@@ -39,10 +36,10 @@ body {
     border: none;
     padding: 10px;
     position: absolute;
-    top: 30%;
-    left: 60%;
+    top: 80%;
+    left: 50%;
     transform: translate(-50%, -50%);
-    width: 15%;
+    width: 50%;
     height: 20%;
     border-radius: 10px;
     color: white;
@@ -50,15 +47,15 @@ body {
     cursor: pointer;
 }
 
-.btn-finalizar {
+.btn-relatorio {
     background: #363636;
     border: none;
     padding: 10px;
     position: absolute;
-    top: 30%;
-    left: 80%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
-    width: 15%;
+    width: 50%;
     height: 20%;
     border-radius: 10px;
     color: white;

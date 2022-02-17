@@ -13,11 +13,6 @@
 	<link rel="stylesheet" href="style/style.css"/>
 </head>
 <body>
-	<!-- <div class="row">
-    	<div class="col-12">
-      		<h3><span th:text="${usuario.nome}"></span></h3>
-    	</div> -->
-  </div>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
   		<div class="container-fluid">
     		<a class="navbar-brand" href="#">PORTARIA</a>
@@ -34,26 +29,24 @@
             Usuário
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="/cadastroUsuario">Cadastrar usuário</a></li>
-            <li><a class="dropdown-item" href="/usuarios">Listar usuários</a></li>
+            <li><a class="dropdown-item" href="/usuarios/new">Cadastrar usuário</a></li>
+            <li><a class="dropdown-item" href="/usuarios/listar">Listar usuários</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
       </ul>
-      		<form class="d-flex">
-        		<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        		<button class="btn btn-outline-success" type="submit">Search</button>
-      		</form>
     	</div>
   	</div>
 	</nav>
-	<div class="buttons-dash">
-        <a href="/entradas/new"><button class="btn-entrada">Registrar Entrada</button></a>
-        <button class="btn-relatorio">Gerar Relatório</button>
-        <a href="/entradas/listar"><button class="btn-listar">Listar Entradas</button></a>
-        <button class="btn-finalizar">Registrar Saída</button>
-      </div>
+	<div class="card-home">
+			<div class="buttons-dash">
+        		<a href="/entradas/new"><button class="btn-entrada">Registrar Entrada</button></a>
+        		<a href="/entradas/listar"><button class="btn-listar">Listar Entradas</button></a>
+        		<button class="btn-relatorio">Gerar Relatório</button>
+        		
+      		</div>
+	</div>
 	<!-- Bootstrap Bundle with Popper -->
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body> 

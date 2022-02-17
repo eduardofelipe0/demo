@@ -28,11 +28,11 @@ public class IndexController {
 		return modelAndView;
 	}
 	
-	private void usuarioLogado() {
+	/* private void usuarioLogado() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if(!(authentication instanceof AnonymousAuthenticationToken)) {
 			String nomeUsuario = authentication.getName();
 			usuario = gestaoUsuarioService.buscar(nomeUsuario);
 		}
-	}
+	} */
 }
