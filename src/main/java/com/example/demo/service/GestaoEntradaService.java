@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,13 @@ public class GestaoEntradaService {
 	}
 	
 	public Entrada criar(Entrada entrada) {
+		
+		/* if(entrada.getStatus().equals("ABERTA")) {
+			
+		} */
+		
 		entrada.setStatus(StatusEntrada.ABERTA);
+		entrada.setHoraEntrada(LocalDateTime.now());
 		return entradaRepository.save(entrada);
 	}
 	
@@ -35,7 +42,8 @@ public class GestaoEntradaService {
 		return (List<Entrada>) entradaRepository.findAll();
 	}
 	
-	public List<Entrada> listaFinalizadas() {
-		return (List<Entrada>) entradaRepository.findAll();	
+	/*public List<Entrada> listaFinalizadas() {
+			
 	}
+	*/
 }

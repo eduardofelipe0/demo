@@ -14,10 +14,8 @@
                 <br>
             </div>
             <form action="#" th:action="@{/entradas/registrar}" method="post" th:object="${entradaAtual}">
+            	<input type="hidden" th:field="*{id}">
               <div class="text-field">
-                <br>
-                <br>
-                <input type="datetime-local" value="" th:field="*{horaEntrada}" placeholder="Data de Entrada">
                 <br>
                 <input type="text" value="" th:field="*{veiculo}" placeholder="Veículo">
                 <br>

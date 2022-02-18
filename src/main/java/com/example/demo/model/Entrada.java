@@ -22,8 +22,7 @@ public class Entrada implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@NotNull
-	private String horaEntrada;
+	private LocalDateTime horaEntrada;
 	
 	@NotNull
 	private String veiculo;
@@ -49,10 +48,10 @@ public class Entrada implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getHoraEntrada() {
+	public LocalDateTime getHoraEntrada() {
 		return horaEntrada;
 	}
-	public void setHoraEntrada(String horaEntrada) {
+	public void setHoraEntrada(LocalDateTime horaEntrada) {
 		this.horaEntrada = horaEntrada;
 	}
 	public String getVeiculo() {
