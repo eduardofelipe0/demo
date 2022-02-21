@@ -73,5 +73,14 @@ public class EntradaController {
 	public ModelAndView finalizar(@PathVariable Long id) {
 		gestaoEntradaService.finalizar(id);
 		return listarEntradas();
-	}	
+	}
+	
+	@RequestMapping(value="/listar/abertas", method=RequestMethod.GET)
+	public ModelAndView listarFinalizadas() {
+		ModelAndView modelAndView = new ModelAndView();
+		List<Entrada> entradas = gestaoEntradaService.listarAbertas();
+		modelAndView.setViewName("entrada/listaEntradasAbertas");
+		modelAndView.addObject("entradas", entradas);
+		return modelAndView;
+	}
 }

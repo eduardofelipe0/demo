@@ -10,6 +10,7 @@ import com.example.demo.model.Entrada;
 import com.example.demo.model.StatusEntrada;
 import com.example.demo.repository.EntradaRepository;
 
+@SuppressWarnings("unchecked")
 @Service
 public class GestaoEntradaService {
 	
@@ -27,12 +28,12 @@ public class GestaoEntradaService {
 		return entradaRepository.findById(id).get();
 	}
 	
+	public Entrada buscarPlaca(String placa) {
+		return entradaRepository.findByPlaca(placa);
+	}
+	
 	public Entrada criar(Entrada entrada) {
-		
-		/* if(entrada.getStatus().equals("ABERTA")) {
-			
-		} */
-		
+		// if(entrada.getPlaca() == entradaRepository.
 		entrada.setStatus(StatusEntrada.ABERTA);
 		entrada.setHoraEntrada(LocalDateTime.now());
 		return entradaRepository.save(entrada);
@@ -42,8 +43,8 @@ public class GestaoEntradaService {
 		return (List<Entrada>) entradaRepository.findAll();
 	}
 	
-	/*public List<Entrada> listaFinalizadas() {
-			
+	 public List<Entrada> listarAbertas() {
+		return (List<Entrada>) entradaRepository.findByStatus(StatusEntrada.ABERTA);
 	}
-	*/
+	 // return (List<Entrada>) entradaRepository.findById(id).get().getStatus() == StatusEntrada.ABERTA;
 }

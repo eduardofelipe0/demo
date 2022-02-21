@@ -11,5 +11,4 @@ public interface EntradaRepository extends CrudRepository<Entrada, Long> {
 	
 	Entrada findByPlaca(String placa);
 	Entrada findByStatus(StatusEntrada status);
-
 }

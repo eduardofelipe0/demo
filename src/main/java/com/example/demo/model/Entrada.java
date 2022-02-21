@@ -77,8 +77,7 @@ public class Entrada implements Serializable{
 	}
 	public void setNumeroApt(String numeroApt) {
 		this.numeroApt = numeroApt;
-	}
-	
+	}	
 	public StatusEntrada getStatus() {
 		return status;
 	}
