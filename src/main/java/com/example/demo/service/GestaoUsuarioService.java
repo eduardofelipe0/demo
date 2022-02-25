@@ -28,4 +28,9 @@ public class GestaoUsuarioService {
 	public void deletar(Usuario usuario) {
 		usuarioRepository.delete(usuario);
 	}
+	
+	public Usuario logar(Usuario usuario) {
+		return usuario = usuarioRepository.findByNomeUsuarioAndSenha(usuario.getNomeUsuario(), usuario.getSenha());
+		
+	}
 }

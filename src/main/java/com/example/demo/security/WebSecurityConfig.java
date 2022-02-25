@@ -1,41 +1,44 @@
 package com.example.demo.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	@Autowired
-	private UserDetailsServiceConfigurer userDetailsService;
-	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
-		http.csrf().disable().authorizeRequests()
-		.antMatchers(HttpMethod.GET, "/home").permitAll()
-		.antMatchers(HttpMethod.GET, "/registroEntrada").hasRole("ADMIN")
-		.anyRequest().authenticated()
-		.and().formLogin().permitAll()
-		.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+		http.authorizeRequests()
+		.antMatchers("/usuarios/new").hasAnyRole("EDITOR")
+		.antMatchers("/usuarios/listar").hasAnyRole("ADMIN")
+		.antMatchers("/bootstrap-5.1.3-dist/**", "/style/**")
+		.permitAll().anyRequest()
+		.authenticated().and().formLogin().
+		loginPage("/login").permitAll().and().
+		logout().permitAll().and()
+		.rememberMe();
 	}
 	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-		auth.userDetailsService(userDetailsService)
-		.passwordEncoder(new BCryptPasswordEncoder());
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder builder)
+	  throws Exception {
+	   builder
+	    .inMemoryAuthentication()
+	    .withUser("eduardo").password("$2a$10$IBHDImf7kZOU3vMJGz0kKuhgY0s5250CTGli9Wz53CgHkjnRxGHwO").roles("EDITOR", "ADMIN")
+	    .and()
+	    .withUser("fernanda").password("$2a$10$IBHDImf7kZOU3vMJGz0kKuhgY0s5250CTGli9Wz53CgHkjnRxGHwO").roles("EDITOR");
 	}
-
-	@Override
-	public void configure(WebSecurity web) throws Exception{
-		web.ignoring().antMatchers("/bootstrap-5.1.3-dist/**", "/style/**");
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+	      return new BCryptPasswordEncoder();
 	}
 }

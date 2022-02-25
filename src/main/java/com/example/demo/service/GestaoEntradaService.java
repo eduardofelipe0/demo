@@ -2,10 +2,8 @@ package com.example.demo.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.demo.model.Entrada;
 import com.example.demo.model.StatusEntrada;
 import com.example.demo.repository.EntradaRepository;
@@ -43,8 +41,12 @@ public class GestaoEntradaService {
 		return (List<Entrada>) entradaRepository.findAll();
 	}
 	
-	 public List<Entrada> listarAbertas() {
-		return (List<Entrada>) entradaRepository.findByStatus(StatusEntrada.ABERTA);
+	public void aberta(Entrada entrada) {
+		entrada.getStatus().equals(StatusEntrada.ABERTA);
+	}
+	
+	public List<Entrada> listarAbertas() {
+		return (List<Entrada>) entradaRepository.findByStatus(StatusEntrada.FINALIZADA);
 	}
 	 // return (List<Entrada>) entradaRepository.findById(id).get().getStatus() == StatusEntrada.ABERTA;
 }

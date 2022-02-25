@@ -1,0 +1,56 @@
+body {
+            margin: 0;
+        }
+        .main-login {
+            width: 100vw;
+            height: 100vh;
+            background-image: url(C:\Users\eduardosilva\Documents\Portaria-Gui\img\foto1.png);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card-login {
+            width: 10%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 80px;
+            background:#000080;
+            border-radius: 20px;
+            box-shadow: 0px 10px 40px #00000056;
+        }
+        .text-field {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        .text-field > input {
+            width: 90%;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            background: whitesmoke;
+            color: #363636;
+            font-size: 13pt;
+            outline: none;
+        }
+        .btn-login {
+            background: #1E90FF;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 10px;
+            color: white;
+            font-size: 13pt;
+            cursor: pointer;
+        }
+        .check-login {
+            font-size: 12pt;
+            color: white;
+            padding: 8px;
+        }
+        .btn-login:hover {
+            background-color: deepskyblue;
+        }
