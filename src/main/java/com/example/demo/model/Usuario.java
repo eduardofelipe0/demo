@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.springframework.data.annotation.Transient;
 
 @Entity
 public class Usuario{
@@ -31,8 +30,8 @@ public class Usuario{
 	@Size(max = 70)
 	private String senha;
 	
-	@Transient
-	private String repetirSenha;
+	//@Transient
+	//private String repetirSenha;
 	
 	public Long getId() {
 		return id;

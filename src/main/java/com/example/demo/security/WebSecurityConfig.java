@@ -9,6 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+
+import com.example.demo.model.Role;
 
 @Configuration
 @EnableWebSecurity
@@ -20,8 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http.authorizeRequests()
-			.antMatchers("/usuarios/new").permitAll()
-			.antMatchers("/usuarios/listar").permitAll()
+			.antMatchers("/usuarios/**").permitAll()
 			.antMatchers("/bootstrap-5.1.3-dist/**", "/style/**")
 			.permitAll()
 			.anyRequest().authenticated()
@@ -30,6 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.loginPage("/login")
 			.usernameParameter("user_nome")
 			.passwordParameter("user_senha")
+			//.defaultSuccessUrl("entrada/home")
 			.permitAll()
 		.and()
 			.logout()
@@ -47,6 +50,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 	      return new BCryptPasswordEncoder();
+	}
+	
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	    registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
 	}
 	
 	/*@Autowired

@@ -1,0 +1,18 @@
+.voltar{
+    position:absolute; 
+    top:14%;
+    left:17.8%;
+    transform: translate(-50%, -50%);
+}
+.ls-custom {
+	position:absolute; 
+    top:14%;
+    left:23%;
+    transform: translate(-50%, -50%);
+}
+.adicionar {
+	position:absolute; 
+    top:14%;
+    left:81%;
+    transform: translate(-50%, -50%);
+}
