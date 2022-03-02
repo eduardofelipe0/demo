@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.springframework.data.annotation.Transient;
 
 @Entity
 public class Usuario{
@@ -23,11 +24,15 @@ public class Usuario{
 	@Size(max = 30)
 	private String nomeUsuario;
 	
+	// @Enumerated(EnumType.STRING)
 	private String role;
 	
 	@NotNull
 	@Size(max = 70)
 	private String senha;
+	
+	@Transient
+	private String repetirSenha;
 	
 	public Long getId() {
 		return id;
@@ -59,6 +64,7 @@ public class Usuario{
 	public void setRole(String role) {
 		this.role = role;
 	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

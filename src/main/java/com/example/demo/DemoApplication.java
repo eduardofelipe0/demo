@@ -8,7 +8,7 @@ public class DemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
-		//System.out.print(new BCryptPasswordEncoder().encode("123456"));
+		//System.out.print(new BCryptPasswordEncoder().encode("viva123"));
 	}
 
 }

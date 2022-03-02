@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Usuario;
@@ -15,6 +16,8 @@ public class GestaoUsuarioService {
 	private UsuarioRepository usuarioRepository;
 	
 	public Usuario cadastrar(Usuario usuario) {
+		String encriptografar = new BCryptPasswordEncoder().encode(usuario.getSenha());
+		usuario.setSenha(encriptografar);
 		return usuarioRepository.save(usuario);
 	}
 	public List<Usuario> listar() {
