@@ -4,13 +4,23 @@ public enum Role {
 	
 	ADMIN("Administrador"), USER("Usuário");
 	
-	private String nome;
-	
-	private Role(String nome) {
-		this.nome = nome;
+	private Role(String descricao) {
+		this.descricao = descricao;
 	}
 	
-	public String getNome() {
-		return this.nome;
+	private String descricao;
+	
+	public String getDescricao() {
+		return this.descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	@Override
+	public String toString() {
+		return this.descricao;
+	}
+	public String getName() {
+		return this.name();
 	}
 }

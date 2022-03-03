@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.Usuario;
@@ -28,9 +27,9 @@ public class UserDetailsServiceConfigurer implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String nomeUsuario) throws UsernameNotFoundException {
 		Usuario usuario = usuarioRepository.findByNomeUsuario(nomeUsuario);
-		
+
 		if(usuario != null){
-			SimpleGrantedAuthority authority = new SimpleGrantedAuthority(usuario.getRole());
+			SimpleGrantedAuthority authority = new SimpleGrantedAuthority(usuario.getRole().name());
 			Set<GrantedAuthority> authorities = new HashSet<>();
 			authorities.add(authority);
 			User user = new User(usuario.getNomeUsuario(), usuario.getSenha(), authorities);

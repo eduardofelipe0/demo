@@ -28,6 +28,10 @@
                 <br>
                 <input type="text" value="" th:field="*{nome}" placeholder="Nome completo">
                 <br>
+                <select th:field="*{role}">
+                	<option th:each="rl: ${roles}" th:value="${rl}" th:utext="${rl}"/>
+                </select >
+                <br>
                 <input type="text" value="" th:field="*{nomeUsuario}" placeholder="Nome de usuário">
                 <br>
                 <input type="password" value="" th:field="*{senha}" placeholder="Senha">

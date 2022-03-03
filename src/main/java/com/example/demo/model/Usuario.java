@@ -2,6 +2,8 @@ package com.example.demo.model;
 
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,15 +25,13 @@ public class Usuario{
 	@Size(max = 30)
 	private String nomeUsuario;
 	
-	// @Enumerated(EnumType.STRING)
-	private String role;
+	@Enumerated(EnumType.STRING)
+	private Role role;
 	
 	@NotNull
 	@Size(max = 70)
 	private String senha;
 	
-	//@Transient
-	//private String repetirSenha;
 	
 	public Long getId() {
 		return id;
@@ -57,10 +57,10 @@ public class Usuario{
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 	

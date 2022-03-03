@@ -7,7 +7,6 @@ public enum StatusEntrada {
 	StatusEntrada (String descricao){
 		this.descricao = descricao;
 	}
-	
 	private String descricao;
 
 	public String getDescricao() {

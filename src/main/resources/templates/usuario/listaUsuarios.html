@@ -29,6 +29,7 @@
               <br>
               <th scope="col">Nome</th>
               <th scope="col">Nome de usuário</th>
+              <th scope="col">Permissão</th>
               <th scope="col">Senha</th>
               <th scope="col">Editar</th>
               <th scope="col">Excluir</th>
@@ -38,6 +39,7 @@
             <tr th:each="usuario : ${usuarios}">
               	<td><span th:text="${usuario.nome}"></span></td>
 				<td><span th:text="${usuario.nomeUsuario}"></span></td>
+				<td><span th:text="${usuario.role}"></span></td>
 				<td><span th:text="${usuario.senha}"></span></td>
 				<td><a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}">Editar</a></td>
 				<td><a th:href="@{/usuarios/excluir/{id}(id=${usuario.id})}">Excluir</a></td>
