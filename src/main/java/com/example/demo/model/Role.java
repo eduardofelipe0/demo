@@ -16,11 +16,11 @@ public enum Role {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	@Override
+	/* @Override
 	public String toString() {
 		return this.descricao;
 	}
 	public String getName() {
 		return this.name();
-	}
+	} */
 }

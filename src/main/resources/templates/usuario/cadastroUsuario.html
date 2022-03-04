@@ -14,11 +14,14 @@
 <body>
 	<nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand">HOME</a>
+      <a href="/home" class="navbar-brand">HOME</a>
     </div>
 	</nav>
 	<div class="main-login">
         <div class="card-login">
+        	<a href="/usuarios/listar">
+     			<button class="btn btn-voltar">Voltar</button>
+    		</a>
             <div class="label">
                 <label for="descricao">Cadastro</label>
                 <br>
@@ -26,15 +29,15 @@
             <form action="#" th:action="@{/usuarios/cadastrar}" method="post" th:object="${usuarioAtual}">
               <div class="text-field">
                 <br>
-                <input type="text" value="" th:field="*{nome}" placeholder="Nome completo">
+                <input type="text" value="" th:field="*{nome}" placeholder="Nome completo" required>
                 <br>
-                <select th:field="*{role}">
-                	<option th:each="rl: ${roles}" th:value="${rl}" th:utext="${rl}"/>
-                </select >
+                <select th:field="*{role}" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+  					<option th:each="rl: ${roles}" th:value="${rl}" th:utext="${rl}"/>
+				</select>
                 <br>
-                <input type="text" value="" th:field="*{nomeUsuario}" placeholder="Nome de usuário">
+                <input type="text" value="" th:field="*{nomeUsuario}" placeholder="Nome de usuário" required>
                 <br>
-                <input type="password" value="" th:field="*{senha}" placeholder="Senha">
+                <input type="password" value="" th:field="*{senha}" placeholder="Senha" required>
                 <br>
                 <br>
                 <button type="submit" class="btn-login">Cadastrar</button>

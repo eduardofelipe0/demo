@@ -38,7 +38,7 @@ body {
     outline: none;
 }
 .btn-login {
-    background: #1E90FF;
+    background: #008000;
     border: none;
     padding: 10px;
     width: 100%;
@@ -46,6 +46,21 @@ body {
     color: white;
     font-size: 13pt;
     cursor: pointer;
+}
+.form-select-lg {
+	border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 13pt;
+    outline: none;
+}
+.btn-voltar {
+	background: #008000;
+	color: white;
+	position:absolute; 
+    top:7%;
+    left:9%;
+    transform: translate(-50%, -50%);
 }
 .btn-login:hover {
     background-color: deepskyblue;

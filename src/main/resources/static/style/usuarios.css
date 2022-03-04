@@ -1,21 +1,17 @@
-body {
-    margin: 0;
+.body {
+	margin: 0;
 }
-.col {
-	position: absolute;
-    top: 50%;
-    left: 30%;
+.adicionar {
+	position:absolute; 
+    top:15%;
+    left:81%;
     transform: translate(-50%, -50%);
-    width: 20%;
-    height: 50%;
 }
-.col-1 {
-	position: absolute;
-    top: 50%;
-    left: 50%;
+.voltar{
+    position:absolute; 
+    top:15%;
+    left:17.8%;
     transform: translate(-50%, -50%);
-    width: 20%;
-    height: 50%;
 }
 .nav-name {
 	position:absolute; 

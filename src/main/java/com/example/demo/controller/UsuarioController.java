@@ -39,7 +39,7 @@ public class UsuarioController {
 		
 		try {
 			gestaoUsuarioService.cadastrar(usuario);
-			modelAndView.setViewName("entrada/home");
+			modelAndView.setViewName("/entrada/home");
 		} catch (Exception e) {
 			modelAndView.setViewName("/login");
 		}
