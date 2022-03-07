@@ -11,6 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
+import com.example.demo.model.Role;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -21,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http.authorizeRequests()
-			.antMatchers("/usuarios/**").permitAll()
+			.antMatchers("/usuarios/**").hasAuthority(Role.ADMIN.name())
 			.antMatchers("/bootstrap-5.1.3-dist/**", "/style/**")
 			.permitAll()
 			.anyRequest().authenticated()
@@ -30,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.loginPage("/login")
 			.usernameParameter("user_nome")
 			.passwordParameter("user_senha")
-			//.defaultSuccessUrl("entrada/home")
+			//.defaultSuccessUrl("entrada/home") hasAuthority(Role.ADMIN.getDescricao()) hasAnyRole("ADMIN")
 			.permitAll()
 		.and()
 			.logout()

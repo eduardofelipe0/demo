@@ -40,6 +40,7 @@
               <br>
               <br>
               <th scope="col">ID</th>
+              <th scope="col">Porteiro</th>
               <th scope="col">Data e Hora de Entrada</th>
               <th scope="col">Veículo</th>
               <th scope="col">Placa</th>
@@ -55,6 +56,7 @@
           <tbody>
             <tr th:each="entrada : ${entradas}">
             	<td><span th:text="${entrada.id}"></span></td>
+            	<td><span sec:authentication="name"></span></td>
               	<td><span th:text="${entrada.horaEntrada}"></span></td>
 				<td><span th:text="${entrada.veiculo}"></span></td>
 				<td><span th:text="${entrada.placa}"></span></td>

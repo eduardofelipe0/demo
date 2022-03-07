@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import com.example.demo.exception.NegocioException;
@@ -38,6 +39,9 @@ public class Entrada implements Serializable{
 	
 	@Enumerated(EnumType.STRING)
 	private StatusEntrada status;
+	
+	@ManyToOne
+	private Usuario usuario;
 	
 	private LocalDateTime horaSaida;
 	
@@ -83,6 +87,12 @@ public class Entrada implements Serializable{
 	}
 	public void setStatus(StatusEntrada status) {
 		this.status = status;
+	}
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	public LocalDateTime getHoraSaida() {
 		return horaSaida;

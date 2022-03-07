@@ -22,15 +22,6 @@
     			</button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Usuário
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="/usuarios/new">Cadastrar usuário</a></li>
-            <li><a class="dropdown-item" href="/usuarios/listar">Listar usuários</a></li>
-          </ul>
-        </li>
          <li class="nav-item">
           <a class="nav-name"><button type="button" class="btn btn-default"><span sec:authentication="name"></span>  <img src="/bootstrap-5.1.3-dist/icons/icons/person-circle.svg"></button></a>
         </li>
@@ -41,36 +32,39 @@
     	</div>
   	</div>
 	</nav>
-	<div class="container">
-		<div class="row row-cols-1 row-cols-md-3 text-center">
+	<div class="container my-2">
+		<h2>Seja Bem vindo!</h2>
+		<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
 			<div class="col">
 				<div class="card mb-4 shadow-sm">
-					<div class="card header">
+					<div class="card-header">
 						<h4 class="my-0 fw-normal">Entradas</h4>
 					</div>
 					<div class="card-body">
-						<ul class="List-unstyled mt-3 mb-4">
-							<li>Lista de Entradas</li>
-							<li>Relatório</li>
+						<ul class="list-unstyled mt-3 mb-4">
 							<li>Adicionar Entradas</li>
+							<li>Listar Entradas</li>
+							<li>Gerar Relatório</li>
 						</ul>
-						<a class="w-100 btn btn-lg btn-primary" th:href="@{/entradas/listar}">Avançar</a>
+						<a class="w-100 btn btn-lg btn-primary" th:href="@{/entradas/listar}">Acessar</a>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row row-cols-1 row-cols-md-3 text-center">
-			<div class="col-1">
-				<div class="card mb-4 shadow-sm">
-					<div class="card header">
-						<h4 class="my-0 fw-normal">Usuarios</h4>
+			<div sec:authorize="hasAuthority('ADMIN')">
+				<div class="col-1">
+					<div class="card mb-4 shadow-sm">
+						<div class="card-header">
+							<h4 class="my-0 fw-normal">Usuários</h4>
+						</div>
+						<div class="card-body">
+							<ul class="list-unstyled mt-3 mb-4">
+								<li>Adicionar Usuários</li>
+								<li>Listar Usuários</li>
+								<li>Editar/Remover Usuários</li>
+							</ul>
+							<a class="w-100 btn btn-lg btn-primary" th:href="@{/usuarios/listar}">Acessar</a>
+						</div>
 					</div>
-					<div class="card-body">
-						<ul class="List-unstyled mt-3 mb-4">
-							<li>Cadastro</li>
-							<li>Listagem</li>
-							<li>Edição/Remoção</li>
-						</ul>
-						<a class="w-100 btn btn-lg btn-primary" th:href="@{/usuarios/listar}">Avançar</a>
 				</div>
 			</div>
 		</div>

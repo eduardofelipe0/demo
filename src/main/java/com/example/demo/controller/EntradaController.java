@@ -37,7 +37,7 @@ public class EntradaController {
 		
 		try {
 			gestaoEntradaService.criar(entrada);
-			modelAndView.setViewName("index");
+			modelAndView.setViewName("entrada/home");
 		} catch (Exception e) {
 			modelAndView.setViewName("entrada/registro");
 		}
