@@ -17,11 +17,11 @@
             	<input type="hidden" th:field="*{id}">
               <div class="text-field">
                 <br>
-                <input type="text" value="" th:field="*{veiculo}" placeholder="Veículo">
+                <input type="text" value="" th:field="*{veiculo}" style="text-transform: capitalize;" placeholder="Veículo" required>
                 <br>
-                <input type="text" value="" th:field="*{placa}" placeholder="Placa">
+                <input type="text" value="" th:field="*{placa}" placeholder="Placa" style="text-transform: uppercase;" required>
                 <br>
-                <input type="text" value="" th:field="*{nomeMotorista}" placeholder="Nome do motorista">
+                <input type="text" value="" th:field="*{nomeMotorista}" style="text-transform: capitalize;" placeholder="Nome do motorista" required>
                 <br>
                 <input type="number" value="" th:field="*{numeroApt}" placeholder="Número do apartamento">
                 <br>

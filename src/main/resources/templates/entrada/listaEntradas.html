@@ -31,6 +31,25 @@
         	<a href="/entradas/new"><button class="adicionar">Adicionar  <img src="/bootstrap-5.1.3-dist/icons/icons/plus-circle.svg"></button></a>
         </div >
       </div>
+      <!-- Modal -->
+	<div class="modal fade" id="deletar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  		<div class="modal-dialog">
+    		<div class="modal-content">
+      			<div class="modal-header">
+        			<h5 class="modal-title" id="exampleModalLabel">Excluir</h5>
+        			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      			</div>
+      <div class="modal-body">
+        <p>Deseja realmente excluir essa entrada?</p>
+      </div>
+       	<div class="modal-footer">
+        	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+        	<div
+        		<a><button type="submit" class="btn btn-primary">Confirmar</button></a></div >
+       		</div>
+    	</div>
+   	</div>    <!-- th:href="@{/entradas/excluir/{id}(id=${entrada.id})}" -->
+  </div>
       <br>
 	 <table class="table table-bordered">
         <thead>
@@ -48,8 +67,8 @@
               <th scope="col">Nº do Apartamento</th>
               <th scope="col">Status da Entrada</th>
               <th scope="col">Data e Hora de Saída</th>
-              <th scope="col">Editar</th>
-              <th scope="col">Remover</th>
+              <a sec:authorize="hasAuthority('ADMIN')"><th scope="col">Editar</th></a>
+              <a sec:authorize="hasAuthority('ADMIN')"><th scope="col">Remover</th></a>
               <th scope="col">Finalizar</th>
             </tr>
           </thead>
@@ -64,9 +83,9 @@
 				<td><span th:text="${entrada.numeroApt}"></span></td>
 				<td><span th:text="${entrada.status}"></span></td>
 				<td><span th:text="${entrada.horaSaida}"></span></td>
-				<td><a th:href="@{/entradas/editar/{id}(id=${entrada.id})}"><img src="/bootstrap-5.1.3-dist/icons/icons/pencil-fill.svg"></a></td>
-				<td><a th:href="@{/entradas/excluir/{id}(id=${entrada.id})}"><img src="/bootstrap-5.1.3-dist/icons/icons/trash-fill.svg"></a></td>
-				<td><a th:href="@{/entradas/finalizar/{id}(id=${entrada.id})}"><img src="/bootstrap-5.1.3-dist/icons/icons/check-square-fill.svg"></a></td>
+				<a sec:authorize="hasAuthority('ADMIN')"><td><a th:href="@{/entradas/editar/{id}(id=${entrada.id})}"><button type="submit" class="btn btn-default"><img src="/bootstrap-5.1.3-dist/icons/icons/pencil-fill.svg"></button ></a></td></a>
+				<a sec:authorize="hasAuthority('ADMIN')"><td><a><button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#deletar"><img src="/bootstrap-5.1.3-dist/icons/icons/trash-fill.svg"></button></a></td></a>
+				<td><a th:href="@{/entradas/finalizar/{id}(id=${entrada.id})}"><button type="submit" class="btn btn-default"><img src="/bootstrap-5.1.3-dist/icons/icons/check-square-fill.svg"></button></a></td>
             </tr>
           </tbody>
 	 </table>

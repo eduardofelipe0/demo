@@ -58,8 +58,8 @@
 				<td><span th:text="${usuario.nomeUsuario}"></span></td>
 				<td><span th:text="${usuario.role}"></span></td>
 				<td><span th:text="${usuario.senha}"></span></td>
-				<td><a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}">Editar</a></td>
-				<td><a th:href="@{/usuarios/excluir/{id}(id=${usuario.id})}">Excluir</a></td>
+				<td><a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}"><button type="submit" class="btn btn-default"><img src="/bootstrap-5.1.3-dist/icons/icons/pencil-fill.svg"></button></a></td>
+				<td><a th:href="@{/usuarios/excluir/{id}(id=${usuario.id})}"><button type="submit" class="btn btn-default"><img src="/bootstrap-5.1.3-dist/icons/icons/trash-fill.svg"></button></a></td>
             </tr >
           </tbody>
 	 </table>

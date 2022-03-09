@@ -16,3 +16,7 @@
     left:81%;
     transform: translate(-50%, -50%);
 }
+.btn-default:hover {
+	transform: scale(1.1);
+    transition: all;
+}

@@ -9,8 +9,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Range;
 
 import com.example.demo.exception.NegocioException;
 
@@ -26,22 +28,23 @@ public class Entrada implements Serializable{
 	private LocalDateTime horaEntrada;
 	
 	@NotNull
+	@Size(max = 30)
 	private String veiculo;
 	
 	@NotNull
+	@Size(min=7, max = 7)
 	private String placa;
 	
 	@NotNull
+	@Size(max = 30)
 	private String nomeMotorista;
 	
 	@NotNull
+	@Range(min = 1101, max = 2432)
 	private String numeroApt;	
 	
 	@Enumerated(EnumType.STRING)
 	private StatusEntrada status;
-	
-	@ManyToOne
-	private Usuario usuario;
 	
 	private LocalDateTime horaSaida;
 	
@@ -87,12 +90,6 @@ public class Entrada implements Serializable{
 	}
 	public void setStatus(StatusEntrada status) {
 		this.status = status;
-	}
-	public Usuario getUsuario() {
-		return usuario;
-	}
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 	public LocalDateTime getHoraSaida() {
 		return horaSaida;

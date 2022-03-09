@@ -27,6 +27,7 @@
                 <br>
             </div>
             <form action="#" th:action="@{/usuarios/cadastrar}" method="post" th:object="${usuarioAtual}">
+            	<input type="hidden" th:field="*{id}">
               <div class="text-field">
                 <br>
                 <input type="text" value="" th:field="*{nome}" placeholder="Nome completo" required>
