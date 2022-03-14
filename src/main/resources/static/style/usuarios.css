@@ -5,21 +5,40 @@
 	position:absolute; 
     top:15%;
     left:81%;
+    padding:5px;
+    border-radius: 10px;
+    transform: translate(-50%, -50%);
+}
+.search {
+	position:absolute; 
+    top:15%;
+    left:70%;
     transform: translate(-50%, -50%);
 }
 .voltar{
-    position:absolute; 
+    position: absolute; 
     top:15%;
     left:17.8%;
+    padding: 5px;
+    border-radius: 10px;
     transform: translate(-50%, -50%);
 }
-.nav-name {
+.nav-name{
 	position:absolute; 
     top:50%;
-    left:94.5%;
+    left:91%;
     transform: translate(-50%, -50%);
 }
-.btn-default:hover {
+.nav-logout {
+	position:absolute; 
+    top:50%;
+    left:98%;
+    transform: translate(-50%, -50%);
+}
+.btn-light{
+	border-radius: 10px;
+}
+.btn-light:hover {
 	transform: scale(1.1);
     transition: all;
 }

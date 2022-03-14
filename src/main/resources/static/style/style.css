@@ -17,13 +17,19 @@ body {
     width: 20%;
     height: 50%;
 }
-.nav-name {
+.nav-name{
 	position:absolute; 
     top:50%;
-    left:94.5%;
+    left:91%;
     transform: translate(-50%, -50%);
 }
-.btn-default:hover {
+.nav-logout {
+	position:absolute; 
+    top:50%;
+    left:98%;
+    transform: translate(-50%, -50%);
+}
+.btn-light:hover {
 	transform: scale(1.1);
     transition: all;
 }

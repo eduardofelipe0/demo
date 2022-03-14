@@ -132,7 +132,7 @@ public class Entrada implements Serializable{
 	
 	public void finalizar() {
 		if(naoPodeSerFinalizada()) {
-			throw new NegocioException("Entrada não pode ser finalizada");
+			throw new NegocioException("Esta entrada já foi finalizada!");
 		}
 		
 		setStatus(StatusEntrada.FINALIZADA);

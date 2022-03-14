@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.exception.NegocioException;
 import com.example.demo.model.Entrada;
+import com.example.demo.model.StatusEntrada;
 import com.example.demo.repository.EntradaRepository;
 import com.example.demo.service.GestaoEntradaService;
 
@@ -57,6 +59,9 @@ public class EntradaController {
 	public ModelAndView editar(@PathVariable("id") Long id) {
 		ModelAndView modelAndView = new ModelAndView();
 		Entrada entrada = gestaoEntradaService.buscar(id);
+		if(entrada.getStatus() == StatusEntrada.FINALIZADA) {
+			throw new NegocioException("Esta entrada já foi finalizada, portanto não é mais possível editá-la.");
+		}
 		modelAndView.setViewName("entrada/registro");
 		modelAndView.addObject("entradaAtual", entrada);
 		return modelAndView;
