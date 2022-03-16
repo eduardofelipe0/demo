@@ -1,17 +1,17 @@
 package com.example.demo.model;
 
-public enum Role {
+public enum TipoEntrada {
+
+	UBER("Uber"), TÁXI("Táxi"), HÓSPEDE("Hóspede"), ENTREGA("Entrega");
 	
-	ADMIN("Administrador"), USER("Padrão");
-	
-	private Role(String descricao) {
+	private TipoEntrada (String descricao){
 		this.descricao = descricao;
 	}
 	
 	private String descricao;
-	
+
 	public String getDescricao() {
-		return this.descricao;
+		return descricao;
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;

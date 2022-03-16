@@ -33,7 +33,7 @@
                 <input type="text" value="" th:field="*{nome}" placeholder="Nome completo" required>
                 <br>
                 <select th:field="*{role}" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-  					<option th:each="rl: ${roles}" th:value="${rl}" th:utext="${rl}"/>
+  					<option th:each="rl: ${roles}" th:value="${rl.name}" th:utext="${rl}"/>
 				</select>
                 <br>
                 <input type="text" value="" th:field="*{nomeUsuario}" placeholder="Nome de usuário" required>

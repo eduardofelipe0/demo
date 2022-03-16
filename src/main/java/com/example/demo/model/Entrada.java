@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,8 +14,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Range;
-
-import com.example.demo.exception.NegocioException;
 
 @Entity
 public class Entrada implements Serializable{
@@ -42,6 +41,9 @@ public class Entrada implements Serializable{
 	@NotNull
 	@Range(min = 1101, max = 2432)
 	private String numeroApt;	
+	
+	@Enumerated(EnumType.STRING)
+	private TipoEntrada tipo;
 	
 	@Enumerated(EnumType.STRING)
 	private StatusEntrada status;
@@ -85,6 +87,12 @@ public class Entrada implements Serializable{
 	public void setNumeroApt(String numeroApt) {
 		this.numeroApt = numeroApt;
 	}	
+	public TipoEntrada getTipo() {
+		return tipo;
+	}
+	public void setTipo(TipoEntrada tipo) {
+		this.tipo = tipo;
+	}
 	public StatusEntrada getStatus() {
 		return status;
 	}
@@ -97,13 +105,9 @@ public class Entrada implements Serializable{
 	public void setHoraSaida(LocalDateTime horaSaida) {
 		this.horaSaida = horaSaida;
 	}
-	
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((placa == null) ? 0 : placa.hashCode());
-		return result;
+		return Objects.hash(id);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -114,28 +118,6 @@ public class Entrada implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Entrada other = (Entrada) obj;
-		if (placa == null) {
-			if (other.placa != null)
-				return false;
-		} else if (!placa.equals(other.placa))
-			return false;
-		return true;
-	}
-	
-	public boolean podeSerFinalizada() {
-		return StatusEntrada.ABERTA.equals(getStatus());
-	}
-	
-	public boolean naoPodeSerFinalizada() {
-		return !podeSerFinalizada();
-	}
-	
-	public void finalizar() {
-		if(naoPodeSerFinalizada()) {
-			throw new NegocioException("Esta entrada já foi finalizada!");
-		}
-		
-		setStatus(StatusEntrada.FINALIZADA);
-		setHoraSaida(LocalDateTime.now());
+		return Objects.equals(id, other.id);
 	}
 }

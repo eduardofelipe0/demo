@@ -9,6 +9,9 @@
 <body>
 	<div class="main-login">
         <div class="card-login">
+        	<a href="/entradas/listar">
+     			<button type="submit" class="btn btn-voltar">Voltar</button>
+        	</a>
             <div class="label">
                 <label for="titulo">Entrada de Veículos</label>
                 <br>
@@ -16,6 +19,11 @@
             <form action="#" th:action="@{/entradas/registrar}" method="post" th:object="${entradaAtual}">
             	<input type="hidden" th:field="*{id}">
               <div class="text-field">
+                <br>
+                <select th:field="*{tipo}" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                	<option value="" selected hidden>Selecione o tipo de entrada</option>
+  					<option th:each="tp: ${tipos}" th:value="${tp.name}" th:utext="${tp}" required/>
+				</select>
                 <br>
                 <input type="text" value="" th:field="*{veiculo}" style="text-transform: capitalize;" placeholder="Veículo" required>
                 <br>

@@ -37,6 +37,29 @@ body {
     font-size: 13pt;
     outline: none;
 }
+.form-select-lg {
+	border: none;
+	width: 107%;
+	background: whitesmoke;
+	color: #363636;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 13pt;
+    outline: none;
+}
+.btn-voltar {
+	background: black;
+	color: white;
+	position:absolute; 
+	padding: 10px;
+    top:6%;
+    left:11%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    font-size: 13pt;
+    border: none;
+    border-radius: 10px;
+}
 .btn-login {
     background: black;
     border: none;
@@ -46,6 +69,9 @@ body {
     color: white;
     font-size: 13pt;
     cursor: pointer;
+}
+.btn-voltar:hover{
+	background-color: #363636;
 }
 .btn-login:hover {
     background-color: #363636;

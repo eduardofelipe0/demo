@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.demo.exception.NegocioException;
 import com.example.demo.model.Entrada;
 import com.example.demo.model.StatusEntrada;
+import com.example.demo.model.TipoEntrada;
 import com.example.demo.repository.EntradaRepository;
 import com.example.demo.service.GestaoEntradaService;
 
@@ -30,6 +31,7 @@ public class EntradaController {
 		Entrada entrada = new Entrada();
 		modelAndView.setViewName("entrada/registro");
 		modelAndView.addObject("entradaAtual", entrada);
+		modelAndView.addObject("tipos", TipoEntrada.values());
 		return modelAndView;
 	}
 	
@@ -64,6 +66,7 @@ public class EntradaController {
 		}
 		modelAndView.setViewName("entrada/registro");
 		modelAndView.addObject("entradaAtual", entrada);
+		modelAndView.addObject("tipos", TipoEntrada.values());
 		return modelAndView;
 	}
 	
