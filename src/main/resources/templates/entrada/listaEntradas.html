@@ -33,14 +33,17 @@
      	<button class="voltar">Voltar</button>
      </a>
      <div class="ls-custom-select">
-        <select class="ls-custom" name="">
+        <select class="form-select" aria-label="Default select example">
           <option selected="selected">Todos</option>
-          <option value="#">Ativos</option>
+          <form class="form" action="listarEntradasAbertas" method="GET">
+          	<a
+          	<option href="@{/listar/abertas}" value="" name="listarAbertas">Ativos</option >
+          </form >
           <option value="#">Desativados</option>
         </select>
         <div class="search">
-    		<form class="form">
-    			<input type="text" placeholder="Buscar">
+    		<form class="form" action="buscar" method="GET">
+    			<input type="text" name="buscarEntrada" value="" placeholder="Buscar">
     			<button type="submit"><img src="/bootstrap-5.1.3-dist/icons/icons/search.svg"></button>
  		</form>
     </div>

@@ -31,8 +31,8 @@ public class GestaoEntradaService {
 	public Entrada buscar(Long id) {
 		return entradaRepository.findById(id).get();
 	}
-	public Entrada buscarPlaca(String placa) {
-		return entradaRepository.findByPlaca(placa);
+	public List<Entrada> buscarPlaca(String placa) {
+		return (List<Entrada>) entradaRepository.findEntradaByPlaca(placa);
 	}
 	public Entrada criar(Entrada entrada) {
 		caracteres(entrada);
@@ -46,7 +46,10 @@ public class GestaoEntradaService {
 	public void aberta(Entrada entrada) {
 		entrada.getStatus().equals(StatusEntrada.ABERTA);
 	}
-	public List<Entrada> listarAbertas() {
+	public List<Entrada> listarAbertas(StatusEntrada status) {
+		return (List<Entrada>) entradaRepository.findEntradaByAbertas(status);
+	}
+	public List<Entrada> listarFinalizadas(){
 		return (List<Entrada>) entradaRepository.findByStatus(StatusEntrada.FINALIZADA);
 	}
 	 // return (List<Entrada>) entradaRepository.findById(id).get().getStatus() == StatusEntrada.ABERTA;

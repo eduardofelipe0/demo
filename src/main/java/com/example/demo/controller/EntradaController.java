@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.exception.NegocioException;
@@ -57,6 +58,24 @@ public class EntradaController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value="/listar/abertas", method=RequestMethod.GET)
+	public ModelAndView listarEntradasAbertas(@RequestParam(value = "listarAbertas", required = false) StatusEntrada status) {
+		ModelAndView modelAndView = new ModelAndView();
+		List<Entrada> entradas = gestaoEntradaService.listarAbertas(status);
+		modelAndView.setViewName("entrada/listaEntradas");
+		modelAndView.addObject("entradas", entradas);
+		return modelAndView;
+	}
+	
+	@RequestMapping(value="/buscar", method=RequestMethod.GET)
+	public ModelAndView buscar(@RequestParam(value = "buscarEntrada", required = false) String buscarEntrada) {
+		ModelAndView modelAndView = new ModelAndView();
+		List<Entrada> entradas = gestaoEntradaService.buscarPlaca(buscarEntrada);
+		modelAndView.setViewName("entrada/listaEntradas");
+		modelAndView.addObject("entradas", entradas);
+		return modelAndView;
+	}
+	
 	@RequestMapping(value="/editar/{id}", method=RequestMethod.GET )
 	public ModelAndView editar(@PathVariable("id") Long id) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -81,14 +100,5 @@ public class EntradaController {
 	public ModelAndView finalizar(@PathVariable Long id) {
 		gestaoEntradaService.finalizar(id);
 		return listarEntradas();
-	}
-	
-	@RequestMapping(value="/listar/abertas", method=RequestMethod.GET)
-	public ModelAndView listarFinalizadas() {
-		ModelAndView modelAndView = new ModelAndView();
-		List<Entrada> entradas = gestaoEntradaService.listarAbertas();
-		modelAndView.setViewName("entrada/listaEntradasAbertas");
-		modelAndView.addObject("entradas", entradas);
-		return modelAndView;
 	}
 }

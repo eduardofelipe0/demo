@@ -20,6 +20,9 @@ public class GestaoUsuarioService {
 		usuario.setSenha(encriptografar);
 		return usuarioRepository.save(usuario);
 	}
+	public List<Usuario> buscarNome(String nome) {
+		return (List<Usuario>) usuarioRepository.findUsuarioByName(nome);
+	}
 	public List<Usuario> listar() {
 		return (List<Usuario>) usuarioRepository.findAll();
 	}

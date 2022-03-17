@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.model.Role;
@@ -50,6 +51,15 @@ public class UsuarioController {
 	public ModelAndView listar() {
 		ModelAndView modelAndView = new ModelAndView();
 		List<Usuario> usuarios = gestaoUsuarioService.listar();
+		modelAndView.setViewName("usuario/listaUsuarios");
+		modelAndView.addObject("usuarios", usuarios);
+		return modelAndView;
+	}
+	
+	@RequestMapping(value="/buscar", method=RequestMethod.GET)
+	public ModelAndView buscar(@RequestParam(value = "buscarUsuario", required = false) String buscarUsuario) {
+		ModelAndView modelAndView = new ModelAndView();
+		List<Usuario> usuarios = gestaoUsuarioService.buscarNome(buscarUsuario);
 		modelAndView.setViewName("usuario/listaUsuarios");
 		modelAndView.addObject("usuarios", usuarios);
 		return modelAndView;

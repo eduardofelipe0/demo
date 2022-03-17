@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.loginPage("/login")
 			.usernameParameter("user_nome")
 			.passwordParameter("user_senha")
-			//.defaultSuccessUrl("entrada/home") hasAuthority(Role.ADMIN.getDescricao()) hasAnyRole("ADMIN")
+			.defaultSuccessUrl("/home") //hasAuthority(Role.ADMIN.getDescricao()) hasAnyRole("ADMIN")
 			.permitAll()
 		.and()
 			.logout()
