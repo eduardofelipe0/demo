@@ -29,7 +29,7 @@ public class Usuario{
 	private Role role;
 	
 	@NotNull
-	@Size(max = 70)
+	@Size(max = 40)
 	private String senha;
 	
 	

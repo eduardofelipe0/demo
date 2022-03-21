@@ -21,7 +21,7 @@
               <div class="text-field">
                 <br>
                 <select th:field="*{tipo}" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                	<option value="" selected hidden>Selecione o tipo de entrada</option>
+                	<!-- <option value="" selected hidden>Selecione o tipo de entrada</option> -->
   					<option th:each="tp: ${tipos}" th:value="${tp.name}" th:utext="${tp}" required/>
 				</select>
                 <br>

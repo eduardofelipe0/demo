@@ -1,5 +1,10 @@
+.body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
 .voltar{
-    position:absolute; 
+	position:absolute;
     top:15%;
     left:17.8%;
     transform: translate(-50%, -50%);
@@ -42,6 +47,13 @@
     transform: translate(-50%, -50%);
     padding: 5px;
     border-radius: 5px;
+}
+.btn-light{
+	border-radius: 10px;
+}
+.btn-light:hover {
+	transform: scale(1.1);
+    transition: all;
 }
 .btn-default:hover {
 	transform: scale(1.1);
