@@ -14,5 +14,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	
 	@Query("select user from Usuario user where user.nome like %?1%")
 	List<Usuario> findUsuarioByName(String nome);
+	
+	@Query("from Usuario where nome_usuario = ?1")
+	public List<Usuario> findByUsuarioByNomeUsuario(String nomeUsuario);
 
 }

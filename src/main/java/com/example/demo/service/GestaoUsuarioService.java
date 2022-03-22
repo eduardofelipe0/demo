@@ -26,17 +26,18 @@ public class GestaoUsuarioService {
 	public List<Usuario> listar() {
 		return (List<Usuario>) usuarioRepository.findAll();
 	}
-	
+	/*
+	public List<Usuario> buscarNomeUsuario(String nomeUsuario) {
+		return (List<Usuario>) usuarioRepository.findByUsuarioByNomeUsuario(nomeUsuario).get(0);
+	} 
+	*/
 	public Usuario buscar(Long id) {
 		return usuarioRepository.findById(id).get();
 	}
-	
 	public void deletar(Usuario usuario) {
 		usuarioRepository.delete(usuario);
 	}
-	
 	public Usuario logar(Usuario usuario) {
-		return usuario = usuarioRepository.findByNomeUsuarioAndSenha(usuario.getNomeUsuario(), usuario.getSenha());
-		
+		return usuario = usuarioRepository.findByNomeUsuarioAndSenha(usuario.getNomeUsuario(), usuario.getSenha());	
 	}
 }

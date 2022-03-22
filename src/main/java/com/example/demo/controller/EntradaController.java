@@ -3,6 +3,9 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,19 +17,24 @@ import com.example.demo.exception.NegocioException;
 import com.example.demo.model.Entrada;
 import com.example.demo.model.StatusEntrada;
 import com.example.demo.model.TipoEntrada;
+import com.example.demo.model.Usuario;
 import com.example.demo.repository.EntradaRepository;
+import com.example.demo.repository.UsuarioRepository;
 import com.example.demo.service.GestaoEntradaService;
 
 @Controller
 @RequestMapping("/entradas")
 public class EntradaController {
-	
+
 	@Autowired
 	private EntradaRepository entradaRepository;
 	@Autowired
+	private UsuarioRepository usuarioRepository;
+	@Autowired
 	private GestaoEntradaService gestaoEntradaService;
-	
-	@RequestMapping(value="/new", method=RequestMethod.GET )
+	private Usuario usuario;
+
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public ModelAndView formulario() {
 		ModelAndView modelAndView = new ModelAndView();
 		Entrada entrada = new Entrada();
@@ -35,11 +43,11 @@ public class EntradaController {
 		modelAndView.addObject("tipos", TipoEntrada.values());
 		return modelAndView;
 	}
-	
-	@RequestMapping(value="/registrar", method=RequestMethod.POST)
+
+	@RequestMapping(value = "/registrar", method = RequestMethod.POST)
 	public ModelAndView registrar(Entrada entrada) {
 		ModelAndView modelAndView = new ModelAndView();
-		
+
 		try {
 			gestaoEntradaService.criar(entrada);
 			modelAndView.setViewName("entrada/home");
@@ -48,8 +56,8 @@ public class EntradaController {
 		}
 		return modelAndView;
 	}
-	
-	@RequestMapping(value="/listar", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public ModelAndView listarEntradas() {
 		ModelAndView modelAndView = new ModelAndView();
 		List<Entrada> entradas = gestaoEntradaService.listar();
@@ -57,17 +65,18 @@ public class EntradaController {
 		modelAndView.addObject("entradas", entradas);
 		return modelAndView;
 	}
-	
-	@RequestMapping(value="/listar/abertas", method=RequestMethod.GET)
-	public ModelAndView listarEntradasAbertas(@RequestParam(value = "listarAbertas", required = false) StatusEntrada status) {
+
+	@RequestMapping(value = "/listar/abertas", method = RequestMethod.GET)
+	public ModelAndView listarEntradasAbertas(
+			@RequestParam(value = "listarAbertas", required = false) StatusEntrada status) {
 		ModelAndView modelAndView = new ModelAndView();
 		List<Entrada> entradas = gestaoEntradaService.listarAbertas(status);
 		modelAndView.setViewName("entrada/listaEntradas");
 		modelAndView.addObject("entradas", entradas);
 		return modelAndView;
 	}
-	
-	@RequestMapping(value="/buscar", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/buscar", method = RequestMethod.GET)
 	public ModelAndView buscar(@RequestParam(value = "buscarEntrada", required = false) String buscarEntrada) {
 		ModelAndView modelAndView = new ModelAndView();
 		List<Entrada> entradas = gestaoEntradaService.buscarPlaca(buscarEntrada);
@@ -75,12 +84,20 @@ public class EntradaController {
 		modelAndView.addObject("entradas", entradas);
 		return modelAndView;
 	}
-	
-	@RequestMapping(value="/editar/{id}", method=RequestMethod.GET )
+
+	private void usuarioLogado() {
+		Authentication logado = SecurityContextHolder.getContext().getAuthentication();
+		if (!(logado instanceof AnonymousAuthenticationToken)) {
+			String nomeUsuario = logado.getName();
+			usuario = usuarioRepository.findByUsuarioByNomeUsuario(nomeUsuario).get(0);
+		}
+	}
+
+	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable("id") Long id) {
 		ModelAndView modelAndView = new ModelAndView();
 		Entrada entrada = gestaoEntradaService.buscar(id);
-		if(entrada.getStatus() == StatusEntrada.FINALIZADA) {
+		if (entrada.getStatus() == StatusEntrada.FINALIZADA) {
 			throw new NegocioException("Esta entrada já foi finalizada, portanto não é mais possível editá-la.");
 		}
 		modelAndView.setViewName("entrada/registro");
@@ -88,15 +105,15 @@ public class EntradaController {
 		modelAndView.addObject("tipos", TipoEntrada.values());
 		return modelAndView;
 	}
-	
-	@RequestMapping(value="/excluir/{id}", method=RequestMethod.GET )
+
+	@RequestMapping(value = "/excluir/{id}", method = RequestMethod.GET)
 	public ModelAndView deletar(@PathVariable Long id) {
 		Entrada entrada = entradaRepository.findById(id).get();
 		entradaRepository.delete(entrada);
 		return listarEntradas();
 	}
-	
-	@RequestMapping(value="/finalizar/{id}", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/finalizar/{id}", method = RequestMethod.GET)
 	public ModelAndView finalizar(@PathVariable Long id) {
 		gestaoEntradaService.finalizar(id);
 		return listarEntradas();
