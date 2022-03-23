@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import com.example.demo.model.Role;
 import com.example.demo.model.Usuario;
 
 @Repository
@@ -17,5 +18,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	
 	@Query("from Usuario where nome_usuario = ?1")
 	public List<Usuario> findByUsuarioByNomeUsuario(String nomeUsuario);
+	
+	@Query("from Usuario user where user.role = :role")
+	public List<Usuario> findUsuarioByRole(Role role);
 
 }

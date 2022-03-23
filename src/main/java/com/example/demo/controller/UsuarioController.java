@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -55,6 +56,23 @@ public class UsuarioController {
 		modelAndView.addObject("usuarios", usuarios);
 		return modelAndView;
 	}
+	
+	@RequestMapping(value = "/permissao", method = RequestMethod.GET)
+    public ModelAndView listarPorStatus(@RequestParam(value = "role", required = false) Role permiss) {
+		ModelAndView modelAndView = new ModelAndView();
+		List<Usuario> usuarios = gestaoUsuarioService.listarPorRole(permiss);
+        if (permiss == null) {
+            return new ModelAndView("redirect:/usuarios/listar");
+        }
+        modelAndView.setViewName("usuario/listaUsuarios");
+        modelAndView.addObject("usuarios", usuarios);
+        return modelAndView;
+    }
+
+	@ModelAttribute("roles")
+    public Role[] role() {
+        return Role.values();
+    }
 	
 	@RequestMapping(value="/buscar", method=RequestMethod.GET)
 	public ModelAndView buscar(@RequestParam(value = "buscarUsuario", required = false) String buscarUsuario) {

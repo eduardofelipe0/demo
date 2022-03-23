@@ -11,7 +11,7 @@ import com.example.demo.model.Entrada;
 import com.example.demo.model.StatusEntrada;
 import com.example.demo.repository.EntradaRepository;
 
-@SuppressWarnings("unchecked")
+//@SuppressWarnings("unchecked")
 @Service
 public class GestaoEntradaService {
 	
@@ -43,14 +43,8 @@ public class GestaoEntradaService {
 	public List<Entrada> listar() {
 		return (List<Entrada>) entradaRepository.findAll();
 	}
-	public void aberta(Entrada entrada) {
-		entrada.getStatus().equals(StatusEntrada.ABERTA);
-	}
-	public List<Entrada> listarAbertas(StatusEntrada status) {
-		return (List<Entrada>) entradaRepository.findEntradaByAbertas(status);
-	}
-	public List<Entrada> listarFinalizadas(){
-		return (List<Entrada>) entradaRepository.findByStatus(StatusEntrada.FINALIZADA);
+	public List<Entrada> listarPorStatus(StatusEntrada status) {
+		return (List<Entrada>) entradaRepository.findEntradaByStatus(status);
 	}
 	 // return (List<Entrada>) entradaRepository.findById(id).get().getStatus() == StatusEntrada.ABERTA;
 	public void caracteres(Entrada entrada) {

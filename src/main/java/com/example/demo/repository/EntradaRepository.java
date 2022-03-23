@@ -11,11 +11,13 @@ import com.example.demo.model.StatusEntrada;
 public interface EntradaRepository extends CrudRepository<Entrada, Long> {
 	
 	Entrada findByPlaca(String placa);
-	Entrada findByStatus(StatusEntrada status);
+	
+	/*@Query("from Entrada e where e.status = :status")
+	Entrada findByStatus(StatusEntrada status);*/
 	
 	@Query("select entra from Entrada entra where entra.placa like %?1%")
 	List<Entrada> findEntradaByPlaca(String placa);
 	
-	@Query("select entra from Entrada entra where entra.status = ABERTA")
-	List<Entrada> findEntradaByAbertas(StatusEntrada status);
+	@Query("from Entrada e where e.status = :status")
+	List<Entrada> findEntradaByStatus(StatusEntrada status);
 }

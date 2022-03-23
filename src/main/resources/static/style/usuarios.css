@@ -9,7 +9,7 @@
     border-radius: 10px;
     transform: translate(-50%, -50%);
 }
-.form-select {
+.form-control {
 	position:absolute; 
     top:15%;
     left:24%;
@@ -17,6 +17,11 @@
     height: 30px;
     padding: 3px;
     transform: translate(-50%, -50%);
+}
+.btn-list {
+	position:absolute; 
+    top:13.4%;
+    left:28%;
 }
 .search {
 	position:absolute; 

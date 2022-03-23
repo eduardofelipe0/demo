@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.model.Role;
 import com.example.demo.model.Usuario;
 import com.example.demo.repository.UsuarioRepository;
 
@@ -25,6 +26,9 @@ public class GestaoUsuarioService {
 	}
 	public List<Usuario> listar() {
 		return (List<Usuario>) usuarioRepository.findAll();
+	}
+	public List<Usuario> listarPorRole(Role role) {
+		return (List<Usuario>) usuarioRepository.findUsuarioByRole(role);
 	}
 	/*
 	public List<Usuario> buscarNomeUsuario(String nomeUsuario) {

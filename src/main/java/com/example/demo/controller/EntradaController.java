@@ -3,10 +3,8 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,9 +15,7 @@ import com.example.demo.exception.NegocioException;
 import com.example.demo.model.Entrada;
 import com.example.demo.model.StatusEntrada;
 import com.example.demo.model.TipoEntrada;
-import com.example.demo.model.Usuario;
 import com.example.demo.repository.EntradaRepository;
-import com.example.demo.repository.UsuarioRepository;
 import com.example.demo.service.GestaoEntradaService;
 
 @Controller
@@ -29,10 +25,7 @@ public class EntradaController {
 	@Autowired
 	private EntradaRepository entradaRepository;
 	@Autowired
-	private UsuarioRepository usuarioRepository;
-	@Autowired
 	private GestaoEntradaService gestaoEntradaService;
-	private Usuario usuario;
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public ModelAndView formulario() {
@@ -66,16 +59,6 @@ public class EntradaController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/listar/abertas", method = RequestMethod.GET)
-	public ModelAndView listarEntradasAbertas(
-			@RequestParam(value = "listarAbertas", required = false) StatusEntrada status) {
-		ModelAndView modelAndView = new ModelAndView();
-		List<Entrada> entradas = gestaoEntradaService.listarAbertas(status);
-		modelAndView.setViewName("entrada/listaEntradas");
-		modelAndView.addObject("entradas", entradas);
-		return modelAndView;
-	}
-
 	@RequestMapping(value = "/buscar", method = RequestMethod.GET)
 	public ModelAndView buscar(@RequestParam(value = "buscarEntrada", required = false) String buscarEntrada) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -84,14 +67,31 @@ public class EntradaController {
 		modelAndView.addObject("entradas", entradas);
 		return modelAndView;
 	}
+	
+	@RequestMapping(value = "/status", method = RequestMethod.GET)
+    public ModelAndView listarPorStatus(@RequestParam(value = "statusEntrada", required = false) StatusEntrada status) {
+		ModelAndView modelAndView = new ModelAndView();
+		List<Entrada> entradas = gestaoEntradaService.listarPorStatus(status);
+        if (status == null) {
+            return new ModelAndView("redirect:/entradas/listar");
+        }
+        modelAndView.setViewName("entrada/listaEntradas");
+        modelAndView.addObject("entradas", entradas);
+        return modelAndView;
+    }
+	
+	@ModelAttribute("stattus")
+    public StatusEntrada[] statusEntrada() {
+        return StatusEntrada.values();
+    }
 
-	private void usuarioLogado() {
+	/*private void usuarioLogado() {
 		Authentication logado = SecurityContextHolder.getContext().getAuthentication();
 		if (!(logado instanceof AnonymousAuthenticationToken)) {
 			String nomeUsuario = logado.getName();
 			usuario = usuarioRepository.findByUsuarioByNomeUsuario(nomeUsuario).get(0);
 		}
-	}
+	}*/
 
 	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable("id") Long id) {
