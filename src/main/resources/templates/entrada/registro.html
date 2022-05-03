@@ -24,6 +24,8 @@
                 	<!-- <option value="" selected hidden>Selecione o tipo de entrada</option> -->
   					<option th:each="tp: ${tipos}" th:value="${tp.name}" th:utext="${tp}" required/>
 				</select>
+				<br>
+				<input type="text" value="" th:field="*{nomeUsuario}" style="text-transform: capitalize;" placeholder="Nome do usuário" required>
                 <br>
                 <input type="text" value="" th:field="*{veiculo}" style="text-transform: capitalize;" placeholder="Veículo" required>
                 <br>

@@ -97,7 +97,7 @@
 			<tbody>
 				<tr th:each="entrada : ${entradas}">
 					<td><span th:text="${entrada.id}"></span></td>
-					<td><span sec:authentication="name"></span></td>
+					<td><span th:text="${entrada.nomeUsuario}"></span ></td>
 					<td><span th:text="${#temporals.format(entrada.horaEntrada, 'dd/MM/yyyy HH:mm')}"></span></td>
 					<td><span th:text="${entrada.tipo}"></span></td>
 					<td><span th:text="${entrada.veiculo}"></span></td>

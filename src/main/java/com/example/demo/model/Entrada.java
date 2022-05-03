@@ -48,6 +48,9 @@ public class Entrada implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private StatusEntrada status;
 	
+	@Size(max = 50)
+	private String nomeUsuario;
+	
 	private LocalDateTime horaSaida;
 	
 	// Getters And Setters
@@ -98,6 +101,12 @@ public class Entrada implements Serializable{
 	}
 	public void setStatus(StatusEntrada status) {
 		this.status = status;
+	}
+	public String getNomeUsuario() {
+		return nomeUsuario;
+	}
+	public void setNomeUsuario(String nomeUsuario) {
+		this.nomeUsuario = nomeUsuario;
 	}
 	public LocalDateTime getHoraSaida() {
 		return horaSaida;
