@@ -17,6 +17,7 @@ import com.example.demo.service.GestaoEntradaService;
 @Controller
 public class RelatorioController {
 
+	/*
 	@Autowired
 	private GestaoEntradaService entradaService;
 	@Autowired 
@@ -28,7 +29,7 @@ public class RelatorioController {
 		List<Entrada> entradas = entradaService.listar();
 		boolean isFlag = entradaService.gerarPdf(entradas, context, request, response);
 		if (isFlag) {
-			String fullPath = request.getServletContext().getRealPath(null);
+			String fullPath = request.getServletContext().getRealPath("/resources/reports/"+"entradas"+".pdf");
 			filedownload(fullPath, response, "entradas.pdf");
 		}
 	}
@@ -55,5 +56,5 @@ public class RelatorioController {
 				e.printStackTrace();
 			}
 		}
-	}
+	} */
 }

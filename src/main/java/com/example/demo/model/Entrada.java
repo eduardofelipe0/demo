@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -129,4 +130,10 @@ public class Entrada implements Serializable{
 		Entrada other = (Entrada) obj;
 		return Objects.equals(id, other.id);
 	}
+	
+	public String converterData(LocalDateTime data) {
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    	String dataFormatada = formatter.format(data);
+    	return dataFormatada;
+    }
 }

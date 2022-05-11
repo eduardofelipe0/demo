@@ -1,6 +1,12 @@
 package com.example.demo.controller;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,10 +19,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.exception.NegocioException;
 import com.example.demo.model.Entrada;
+import com.example.demo.model.EntradaPdfExporter;
 import com.example.demo.model.StatusEntrada;
 import com.example.demo.model.TipoEntrada;
 import com.example.demo.repository.EntradaRepository;
 import com.example.demo.service.GestaoEntradaService;
+import com.lowagie.text.DocumentException;
 
 @Controller
 @RequestMapping("/entradas")
@@ -58,6 +66,24 @@ public class EntradaController {
 		modelAndView.addObject("entradas", entradas);
 		return modelAndView;
 	}
+	
+	@RequestMapping(value = "/export/pdf", method = RequestMethod.GET)
+    public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
+		
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+         
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=entrada_" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+         
+        List<Entrada> listaEntradas = gestaoEntradaService.listAll();
+         
+        EntradaPdfExporter exporter = new EntradaPdfExporter(listaEntradas);
+        exporter.export(response);
+         
+    }
 
 	@RequestMapping(value = "/buscar", method = RequestMethod.GET)
 	public ModelAndView buscar(@RequestParam(value = "buscarEntrada", required = false) String buscarEntrada) {
@@ -67,31 +93,31 @@ public class EntradaController {
 		modelAndView.addObject("entradas", entradas);
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "/status", method = RequestMethod.GET)
-    public ModelAndView listarPorStatus(@RequestParam(value = "statusEntrada", required = false) StatusEntrada status) {
+	public ModelAndView listarPorStatus(@RequestParam(value = "statusEntrada", required = false) StatusEntrada status) {
 		ModelAndView modelAndView = new ModelAndView();
 		List<Entrada> entradas = gestaoEntradaService.listarPorStatus(status);
-        if (status == null) {
-            return new ModelAndView("redirect:/entradas/listar");
-        }
-        modelAndView.setViewName("entrada/listaEntradas");
-        modelAndView.addObject("entradas", entradas);
-        return modelAndView;
-    }
-	
-	@ModelAttribute("stattus")
-    public StatusEntrada[] statusEntrada() {
-        return StatusEntrada.values();
-    }
-
-	/*private void usuarioLogado() {
-		Authentication logado = SecurityContextHolder.getContext().getAuthentication();
-		if (!(logado instanceof AnonymousAuthenticationToken)) {
-			String nomeUsuario = logado.getName();
-			usuario = usuarioRepository.findByUsuarioByNomeUsuario(nomeUsuario).get(0);
+		if (status == null) {
+			return new ModelAndView("redirect:/entradas/listar");
 		}
-	}*/
+		modelAndView.setViewName("entrada/listaEntradas");
+		modelAndView.addObject("entradas", entradas);
+		return modelAndView;
+	}
+
+	@ModelAttribute("stattus")
+	public StatusEntrada[] statusEntrada() {
+		return StatusEntrada.values();
+	}
+
+	/*
+	 * private void usuarioLogado() { Authentication logado =
+	 * SecurityContextHolder.getContext().getAuthentication(); if (!(logado
+	 * instanceof AnonymousAuthenticationToken)) { String nomeUsuario =
+	 * logado.getName(); usuario =
+	 * usuarioRepository.findByUsuarioByNomeUsuario(nomeUsuario).get(0); } }
+	 */
 
 	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable("id") Long id) {
@@ -118,4 +144,5 @@ public class EntradaController {
 		gestaoEntradaService.finalizar(id);
 		return listarEntradas();
 	}
+
 }
