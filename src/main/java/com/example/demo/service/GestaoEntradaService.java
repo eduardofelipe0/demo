@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -47,27 +48,31 @@ public class GestaoEntradaService {
 		return nome;
 	}
 
-	public Entrada criar(Entrada entrada) {
-		caracteres(entrada);
-		entrada.setStatus(StatusEntrada.ABERTA);
-		entrada.setHoraEntrada(LocalDateTime.now());
-		return entradaRepository.save(entrada);
+	public void criar(Entrada entrada) throws Exception {
+		
+		Optional<Entrada> entra = entradaRepository.findEntradaPlaca(entrada);
+		if (entra.isPresent()) {
+			System.out.println("Erro!");
+		} else {
+			caracteres(entrada);
+			entrada.setStatus(StatusEntrada.ABERTA);
+			entrada.setHoraEntrada(LocalDateTime.now());
+			entradaRepository.save(entrada);
+		}
 	}
 
 	public List<Entrada> listar() {
 		return (List<Entrada>) entradaRepository.findAll();
 	}
-	
+
 	public List<Entrada> listAll() {
-        return entradaRepository.findAll(Sort.by("placa").ascending());
-    }
+		return entradaRepository.findAll(Sort.by("placa").ascending());
+	}
 
 	public List<Entrada> listarPorStatus(StatusEntrada status) {
 		return (List<Entrada>) entradaRepository.findEntradaByStatus(status);
 	}
 
-	// return (List<Entrada>) entradaRepository.findById(id).get().getStatus() ==
-	// StatusEntrada.ABERTA;
 	public void caracteres(Entrada entrada) {
 		// Convertendo a String da placa para letras Maiúsculas
 		entrada.setPlaca(entrada.getPlaca().toUpperCase());

@@ -115,9 +115,10 @@ public class Entrada implements Serializable{
 	public void setHoraSaida(LocalDateTime horaSaida) {
 		this.horaSaida = horaSaida;
 	}
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(placa);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -128,7 +129,7 @@ public class Entrada implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Entrada other = (Entrada) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(placa, other.placa);
 	}
 	
 	public String converterData(LocalDateTime data) {

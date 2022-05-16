@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.exception.NegocioException;
 import com.example.demo.model.Entrada;
@@ -133,9 +134,10 @@ public class EntradaController {
 	}
 
 	@RequestMapping(value = "/excluir/{id}", method = RequestMethod.GET)
-	public ModelAndView deletar(@PathVariable Long id) {
+	public ModelAndView deletar(@PathVariable("id") Long id, RedirectAttributes atributes) {
 		Entrada entrada = entradaRepository.findById(id).get();
 		entradaRepository.delete(entrada);
+		atributes.addFlashAttribute("message", "Entrada removida com sucesso!");
 		return listarEntradas();
 	}
 

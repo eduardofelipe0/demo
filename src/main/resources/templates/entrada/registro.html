@@ -8,6 +8,9 @@
 </head>
 <body>
 	<div class="main-login">
+		<div th:if="${param.error}">
+      <div class="alert alert-danger">Placa ainda possui saída pendente!</div>
+     </div>
         <div class="card-login">
         	<a href="/entradas/listar">
      			<button type="submit" class="btn btn-voltar">Voltar</button>
