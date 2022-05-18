@@ -1,0 +1,22 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div class="container" th:fragment="cabecalho">
+	<nav class="navbar navbar-dark bg-dark">
+		<div class="navbar-form navbar-left">
+			<a class="navbar-brand" href="/home" style="color: white;">
+				<img src="/bootstrap-5.1.3-dist/icons/icons/file-ppt-fill.svg" width="30" height="30"
+					class="d-inline-block align-top" alt="">
+				Portaria
+			</a>
+			<a class="nav-name">
+				<button type="button" class="btn btn-light"><span sec:authentication="name"></span> <img
+						src="/bootstrap-5.1.3-dist/icons/icons/person-circle.svg"></button>
+			</a>
+			<form th:action="@{/logout}" method="post" class="nav-logout">
+				<button type="submit" class="btn btn-light"><img
+						src="/bootstrap-5.1.3-dist/icons/icons/box-arrow-right.svg" title="Sair"></button>
+			</form>
+		</div>
+	</nav>
+</div>
+
+</html>

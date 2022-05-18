@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,11 +62,10 @@ public class EntradaController {
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public ModelAndView listarEntradas() {
-		ModelAndView modelAndView = new ModelAndView();
-		List<Entrada> entradas = gestaoEntradaService.listar();
-		modelAndView.setViewName("entrada/listaEntradas");
-		modelAndView.addObject("entradas", entradas);
-		return modelAndView;
+		ModelMap model = new ModelMap();
+		model.addAttribute("entradas", gestaoEntradaService.listar());
+        model.addAttribute("conteudo", "entrada/listaEntradas");
+        return new ModelAndView("layout", model);
 	}
 	
 	@RequestMapping(value = "/export/pdf", method = RequestMethod.GET)

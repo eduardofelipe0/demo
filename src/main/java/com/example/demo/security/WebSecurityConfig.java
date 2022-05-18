@@ -55,15 +55,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 	    registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
 	}
-	
-	/*@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder builder)
-	  throws Exception {
-	   builder
-	    .inMemoryAuthentication()
-	    .withUser("eduardo").password("$2a$10$IBHDImf7kZOU3vMJGz0kKuhgY0s5250CTGli9Wz53CgHkjnRxGHwO").roles("EDITOR", "ADMIN")
-	    .and()
-	    .withUser("fernanda").password("$2a$10$IBHDImf7kZOU3vMJGz0kKuhgY0s5250CTGli9Wz53CgHkjnRxGHwO").roles("EDITOR");
-	} */
-	
 }
