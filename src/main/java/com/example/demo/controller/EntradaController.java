@@ -50,12 +50,14 @@ public class EntradaController {
 	@RequestMapping(value = "/registrar", method = RequestMethod.POST)
 	public ModelAndView registrar(Entrada entrada) {
 		ModelAndView modelAndView = new ModelAndView();
+		ModelMap model = new ModelMap();
 
 		try {
 			gestaoEntradaService.criar(entrada);
-			modelAndView.setViewName("entrada/home");
+			model.addAttribute("conteudo", "entrada/home");
+			return new ModelAndView("layout", model);
 		} catch (Exception e) {
-			modelAndView.setViewName("entrada/registro");
+			model.addAttribute("conteudo", "entrada/registro");
 		}
 		return modelAndView;
 	}
@@ -134,17 +136,18 @@ public class EntradaController {
 	}
 
 	@RequestMapping(value = "/excluir/{id}", method = RequestMethod.GET)
-	public ModelAndView deletar(@PathVariable("id") Long id, RedirectAttributes atributes) {
+	public String deletar(@PathVariable("id") Long id, RedirectAttributes atributes) {
 		Entrada entrada = entradaRepository.findById(id).get();
 		entradaRepository.delete(entrada);
-		atributes.addFlashAttribute("message", "Entrada removida com sucesso!");
-		return listarEntradas();
+		atributes.addFlashAttribute("message", "Entrada removida com sucesso.");
+	    return "redirect:/entradas/listar";
 	}
 
 	@RequestMapping(value = "/finalizar/{id}", method = RequestMethod.GET)
-	public ModelAndView finalizar(@PathVariable Long id) {
+	public String finalizar(@PathVariable Long id, RedirectAttributes atributes) {
 		gestaoEntradaService.finalizar(id);
-		return listarEntradas();
+		atributes.addFlashAttribute("message", "Saída registrada com sucesso.");
+		return "redirect:/entradas/listar";
 	}
 
 }
