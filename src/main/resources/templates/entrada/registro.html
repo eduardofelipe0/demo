@@ -1,49 +1,62 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	  
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
-	<title>Registrar Entrada</title>
-	<link rel="stylesheet" type="text/css" th:href="@{/style/registro.css}"/>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Registro</title>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.1.3-dist/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/style/registro.css}" />
 </head>
+
 <body>
-	<div class="main-login">
-		<div th:if="${param.error}">
-      <div class="alert alert-danger">Placa ainda possui saída pendente!</div>
-     </div>
-        <div class="card-login">
-        	<a href="/entradas/listar">
-     			<button type="submit" class="btn btn-voltar">Voltar</button>
-        	</a>
-            <div class="label">
-                <label for="titulo">Entrada de Veículos</label>
-                <br>
-            </div>
-            <form action="#" th:action="@{/entradas/registrar}" method="post" th:object="${entradaAtual}">
-            	<input type="hidden" th:field="*{id}">
-              <div class="text-field">
-                <br>
-                <select th:field="*{tipo}" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                	<!-- <option value="" selected hidden>Selecione o tipo de entrada</option> -->
-  					<option th:each="tp: ${tipos}" th:value="${tp.name}" th:utext="${tp}" required/>
-				</select>
-				<br>
-				<input type="text" value="" th:field="*{nomeUsuario}" style="text-transform: capitalize;" placeholder="Nome do usuário" required>
-                <br>
-                <input type="text" value="" th:field="*{veiculo}" style="text-transform: capitalize;" placeholder="Veículo" required>
-                <br>
-                <input type="text" value="" th:field="*{placa}" placeholder="Placa" style="text-transform: uppercase;" required>
-                <br>
-                <input type="text" value="" th:field="*{nomeMotorista}" style="text-transform: capitalize;" placeholder="Nome do motorista" required>
-                <br>
-                <input type="number" value="" th:field="*{numeroApt}" placeholder="Número do apartamento">
-                <br>
-                <br>
-                <button type="submit" class="btn-login">Salvar</button>
-             </div>
-            </form>
-        </div>
-    </div>
+	<br><br><br><br><br><br><br><br><br>
+	<div class="col-md-4 offset-md-4">
+		<div class="container-sm">
+			<a href="/entradas/listar"><button class="btn btn-secondary" type="submit">Voltar</button ></a>
+			<div class="label">
+				<label for="titulo">Entrada de Veículos</label>
+				<br><br>
+			</div>
+			<form class="row g-3" action="#" th:action="@{/entradas/registrar}" method="post"
+				th:object="${entradaAtual}">
+				<input type="hidden" th:field="*{id}">
+				<div class="col-md-6">
+					<label for="inputEmail4" class="form-label">Veículo</label>
+					<input type="text" class="form-control" value="" th:field="*{veiculo}"
+						placeholder="Insira o modelo do veículo" required>
+				</div>
+				<div class="col-md-6">
+					<label for="inputPassword4" class="form-label">Placa</label>
+					<input type="text" class="form-control" value="" th:field="*{placa}"
+						placeholder="Insira a placa do veículo" required>
+				</div>
+				<div class="col-12">
+					<label for="inputAddress" class="form-label">Nome do motorista</label>
+					<input type="text" class="form-control" value="" th:field="*{nomeMotorista}"
+						placeholder="Insira o nome do motorista" required>
+				</div>
+				<div class="col-md-6">
+					<label for="inputCity" class="form-label">Número do Apartamento</label>
+					<input type="number" value="" th:field="*{numeroApt}" class="form-control"
+						placeholder="Insira o número do apartamento">
+				</div>
+				<div class="col-md-4">
+					<label th:field="*{tipo}" for="inputState" class="form-label">Tipo da entrada</label>
+					<select id="inputState" class="form-select">
+						<option selected disabled value="">Selecione...</option>
+						<option th:each="tp: ${tipos}" th:value="${tp.name}" th:utext="${tp}" required />
+					</select>
+				</div>
+				<div class="col-12">
+					<button type="submit" class="btn btn-primary">Registrar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script type="text/javascript" src="../bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

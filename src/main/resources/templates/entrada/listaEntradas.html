@@ -13,7 +13,19 @@
 		</div>
 	</nav>
 	<br>
-	<table class="table table-striped table-condensed">
+	<!--<div class="voltar">
+		<a href="/home"><button class="btn btn-secondary" type="submit">Voltar</button></a>
+	</div>
+	<div class="adicionar">
+		<a href="/entradas/new"><button class="btn btn-secondary">Adicionar <img
+					src="/bootstrap-5.1.3-dist/icons/icons/plus-circle.svg"></button></a>
+	</div>-->
+	<div th:class="${#strings.isEmpty(message)} ? 'panel panel-default' : 'panel panel-success'">
+
+		<div class="panel-heading">
+			<span th:text="${#strings.isEmpty(message)} ? '' : ${message}"> </span>
+		</div>
+		<table class="table table-striped table-condensed">
 			<thead>
 				<tr>
 					<br> <br> <br> <br>
@@ -115,8 +127,9 @@
 					</td>
 				</tr>
 			</tbody>
-	</table>
-	<script type="text/javascript" src="../bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
+		</table>
+		<script type="text/javascript" src="../bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
+	</div>
 </div>
 
 </html>
