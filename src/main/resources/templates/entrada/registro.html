@@ -24,29 +24,29 @@
 				th:object="${entradaAtual}">
 				<input type="hidden" th:field="*{id}">
 				<div class="col-md-6">
-					<label for="inputEmail4" class="form-label">Veículo</label>
+					<label class="form-label">Veículo</label>
 					<input type="text" class="form-control" value="" th:field="*{veiculo}"
 						placeholder="Insira o modelo do veículo" required>
 				</div>
 				<div class="col-md-6">
-					<label for="inputPassword4" class="form-label">Placa</label>
+					<label class="form-label">Placa</label>
 					<input type="text" class="form-control" value="" th:field="*{placa}"
 						placeholder="Insira a placa do veículo" required>
 				</div>
 				<div class="col-12">
-					<label for="inputAddress" class="form-label">Nome do motorista</label>
+					<label class="form-label">Nome do motorista</label>
 					<input type="text" class="form-control" value="" th:field="*{nomeMotorista}"
 						placeholder="Insira o nome do motorista" required>
 				</div>
 				<div class="col-md-6">
-					<label for="inputCity" class="form-label">Número do Apartamento</label>
+					<label class="form-label">Número do Apartamento</label> 
 					<input type="number" value="" th:field="*{numeroApt}" class="form-control"
 						placeholder="Insira o número do apartamento">
 				</div>
 				<div class="col-md-4">
-					<label th:field="*{tipo}" for="inputState" class="form-label">Tipo da entrada</label>
-					<select id="inputState" class="form-select">
-						<option selected disabled value="">Selecione...</option>
+					<label class="form-label">Tipo da entrada</label>
+					<select th:field="*{tipo}" class="form-select">
+						<option selected value="">Selecione...</option>
 						<option th:each="tp: ${tipos}" th:value="${tp.name}" th:utext="${tp}" required />
 					</select>
 				</div>

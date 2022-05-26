@@ -13,9 +13,9 @@
 		<span>Carrega o fragmento do cabeçalho</span>
 	</div>
 
-	<div class="container" th:include="${conteudo} :: corpo">
+	<div class="container-fluid" th:include="${conteudo} :: corpo">
 		<span>o conteúdo será inserido aqui!</span>
-	</div>
+	</div >
 
 	<footer class="footer" th:insert="fragmento/footer">
 		<span>O rodapé será inserido aqui!</span>

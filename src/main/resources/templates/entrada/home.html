@@ -2,37 +2,49 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <div class="container my-2" th:fragment="corpo">
-	<br>
-	<br>
-	<br>
-	<br>
+	<br><br><br><br><br>
 	<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
 		<div class="col">
 			<div class="card mb-4 shadow-sm">
 				<div class="card-header">
-					<h4 class="my-0 fw-normal">Entradas</h4>
+					<h4 class="my-0 fw-normal">Entradas/Saídas de Veículos</h4>
 				</div>
 				<div class="card-body">
 					<ul class="list-unstyled mt-3 mb-4">
-						<li>Adicionar Entradas</li>
-						<li>Listar Entradas</li>
-						<li>Gerar Relatório</li>
+						<li>• Adicionar Entradas</li>
+						<li>• Listar Entradas</li>
+						<li>• Gerar Relatório</li>
 					</ul>
 					<a class="w-100 btn btn-lg btn-dark" th:href="@{/entradas/listar}">Acessar</a>
 				</div>
 			</div>
 		</div>
+		<div class="col-15">
+			<div class="card mb-4 shadow-sm">
+				<div class="card-header">
+					<h4 class="my-0 fw-normal">Entradas/Saídas de Objetos</h4>
+				</div>
+				<div class="card-body">
+					<ul class="list-unstyled mt-3 mb-4">
+						<li>• Registrar Entrada e Saída de Objetos</li>
+						<li>• Visualizar Objetos Pendentes</li>
+						<li>• Listagem de Objetos</li>
+					</ul>
+					<a class="w-100 btn btn-lg btn-dark">Acessar</a>
+				</div>
+			</div>
+		</div>
 		<div sec:authorize="hasAuthority('ADMIN')">
-			<div class="col-15">
+			<div class="col-30">
 				<div class="card mb-4 shadow-sm">
 					<div class="card-header">
 						<h4 class="my-0 fw-normal">Usuários</h4>
 					</div>
 					<div class="card-body">
 						<ul class="list-unstyled mt-3 mb-4">
-							<li>Adicionar Usuários</li>
-							<li>Listar Usuários</li>
-							<li>Editar/Remover Usuários</li>
+							<li>• Adicionar Usuários</li>
+							<li>• Listar Usuários</li>
+							<li>• Editar/Remover Usuários</li>
 						</ul>
 						<a class="w-100 btn btn-lg btn-dark" th:href="@{/usuarios/listar}">Acessar</a>
 					</div>
