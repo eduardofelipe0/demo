@@ -50,15 +50,14 @@ public class GestaoEntradaService {
 
 	public void criar(Entrada entrada) throws Exception {
 		
-		Optional<Entrada> entra = entradaRepository.findEntradaPlaca(entrada);
+		/* Optional<Entrada> entra = entradaRepository.findEntradaPlaca(entrada);
 		if (entra.isPresent()) {
 			System.out.println("Erro!");
-		} else {
+		} else { }*/
 			caracteres(entrada);
 			entrada.setStatus(StatusEntrada.ABERTA);
 			entrada.setHoraEntrada(LocalDateTime.now());
 			entradaRepository.save(entrada);
-		}
 	}
 
 	public List<Entrada> listar() {
