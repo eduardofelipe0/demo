@@ -123,15 +123,17 @@ public class EntradaController {
 	 */
 
 	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
-	public ModelAndView editar(@PathVariable("id") Long id) {
+	public ModelAndView editar(@PathVariable("id") Long id, RedirectAttributes atributes) {
 		ModelAndView modelAndView = new ModelAndView();
 		Entrada entrada = gestaoEntradaService.buscar(id);
 		if (entrada.getStatus() == StatusEntrada.FINALIZADA) {
 			throw new NegocioException("Esta entrada já foi finalizada, portanto não é mais possível editá-la.");
+			//atributes.addFlashAttribute("message", "Esta entrada já foi finalizada, portanto não é mais possível editá-la.");
 		}
 		modelAndView.setViewName("entrada/registro");
 		modelAndView.addObject("entradaAtual", entrada);
 		modelAndView.addObject("tipos", TipoEntrada.values());
+		atributes.addFlashAttribute("message", "Entrada editada com suceso.");
 		return modelAndView;
 	}
 

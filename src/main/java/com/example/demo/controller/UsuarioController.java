@@ -1,14 +1,18 @@
 package com.example.demo.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.example.demo.model.Role;
 import com.example.demo.model.Usuario;
 import com.example.demo.repository.UsuarioRepository;
@@ -36,23 +40,24 @@ public class UsuarioController {
 	@RequestMapping(value="/cadastrar", method=RequestMethod.POST)
 	public ModelAndView cadastrar(Usuario usuario) {
 		ModelAndView modelAndView = new ModelAndView();
+		ModelMap model = new ModelMap();
 		
 		try {
 			gestaoUsuarioService.cadastrar(usuario);
-			modelAndView.setViewName("/entrada/home");
+			model.addAttribute("conteudo", "entrada/home");
+			return new ModelAndView("layout", model);
 		} catch (Exception e) {
-			modelAndView.setViewName("/login");
+			model.addAttribute("conteudo", "usuario/cadastroUsuario");
 		}
 		return modelAndView;
 	}
 	
 	@RequestMapping(value="/listar", method=RequestMethod.GET)
 	public ModelAndView listar() {
-		ModelAndView modelAndView = new ModelAndView();
-		List<Usuario> usuarios = gestaoUsuarioService.listar();
-		modelAndView.setViewName("usuario/listaUsuarios");
-		modelAndView.addObject("usuarios", usuarios);
-		return modelAndView;
+		ModelMap model = new ModelMap();
+		model.addAttribute("usuarios", gestaoUsuarioService.listar());
+        model.addAttribute("conteudo", "usuario/listaUsuarios");
+        return new ModelAndView("layout", model);
 	}
 	
 	@RequestMapping(value = "/permissao", method = RequestMethod.GET)
@@ -82,19 +87,21 @@ public class UsuarioController {
 	}
 	
 	@RequestMapping(value="/editar/{id}", method=RequestMethod.GET)
-	public ModelAndView editar(@PathVariable ("id") Long id) {
+	public ModelAndView editar(@PathVariable ("id") Long id, RedirectAttributes atibutes) {
 		ModelAndView modelAndView = new ModelAndView();
 		Usuario usuario = gestaoUsuarioService.buscar(id);
 		modelAndView.setViewName("usuario/cadastroUsuario");
 		modelAndView.addObject("usuarioAtual", usuario);
 		modelAndView.addObject("roles", Role.values());
 		return modelAndView;
+		
 	}
 	
 	@RequestMapping(value="/excluir/{id}", method=RequestMethod.GET )
-	public ModelAndView remover(@PathVariable Long id) {
+	public String remover(@PathVariable Long id, RedirectAttributes atributes) {
 		Usuario usuario = usuarioRepository.findById(id).get();
 		usuarioRepository.delete(usuario);
-		return listar();
+		atributes.addFlashAttribute("message", "Usuário removido com sucesso.");
+	    return "redirect:/usuarios/listar";
 	}
 }

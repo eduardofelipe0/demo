@@ -1,128 +1,75 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<head>
-	<title>Usuários</title>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, max-scale=1.0">
-
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" th:href="@{/style/usuarios.css}" 
-</head>
-
-<body>
-	<div class="container-fluid">
-		<nav class="navbar navbar-inverse">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="/home">VIVÁ PORTO DE GALINHAS</a>
-				</div>
-				<div class="collapse navbar-collapse" id="myNavbar">
-					<ul class="nav navbar-nav navbar-right">
-						<li><a><span class="glyphicon glyphicon-user"></span> <span sec:authentication="name"></span></a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-					</ul>
-				</div>
+<div class="container-fluid" th:fragment="corpo">
+	<br> <br>
+	<h1>Usuários</h1>
+	<hr>
+	<div class="card">
+		<div th:class="${#strings.isEmpty(message)} ? '' : 'card bg-success'">
+			<div class="card-header">
+				<span th:text="${#strings.isEmpty(message)} ? '' : ${message}"> </span>
 			</div>
-		</nav>
-	</div>
-	<div class="container">
-		<a href="/home">
-			<button class="voltar">Voltar</button>
-		</a>
-		<form class="navbar-form navbar-left" th:action="@{/usuarios/permissao}" method="GET">
-			<div class="form-group">
-				<select name="role" class="form-control">
-					<option value="">Busca por Permissão</option>
-					<a href="/usuarios/listar">
-						<option value="">TODOS</option>
-					</a>
-					<option th:each="role : ${roles}" th:value="${role.name}" th:text="${role.name}">
-					</option>
-				</select>
-			</div>
-			<button type="submit" class="btn-list">Listar <img
-					src="/bootstrap-5.1.3-dist/icons/icons/list-ul.svg"></button>
-		</form>
-		<div class="search">
-			<form class="form" action="buscar" method="GET">
-				<input type="text" name="buscarUsuario" value="" placeholder="Buscar">
-				<button type="submit"><img src="/bootstrap-5.1.3-dist/icons/icons/search.svg"></button>
-			</form>
 		</div>
-		<div class="bt custom-button">
-			<a href="/usuarios/new"><button class="adicionar">Adicionar <img
-						src="/bootstrap-5.1.3-dist/icons/icons/plus-circle.svg"></button></a>
-		</div>
-		<br>
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<br>
-					<br>
-					<br>
-					<br>
-					<th scope="col">ID</th>
-					<th scope="col">Nome</th>
-					<th scope="col">Nome de usuário</th>
-					<th scope="col">Permissão</th>
-					<th scope="col">Senha</th>
-					<th scope="col">Editar</th>
-					<th scope="col">Excluir</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="usuario : ${usuarios}">
-					<td><span th:text="${usuario.id}"></span></td>
-					<td><span th:text="${usuario.nome}"></span></td>
-					<td><span th:text="${usuario.nomeUsuario}"></span></td>
-					<td><span th:text="${usuario.role}"></span></td>
-					<td><span th:text="${usuario.senha}"></span></td>
-					<td><a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}"><button type="submit"
-								class="btn btn-default"><img
-									src="/bootstrap-5.1.3-dist/icons/icons/pencil-fill.svg"></button></a></td>
-					<td>
-						<a><button type="button" class="btn btn-default" data-bs-toggle="modal"
-								th:attr="data-bs-target='#deletar_'+${usuario.id}"><img
-									src="/bootstrap-5.1.3-dist/icons/icons/trash-fill.svg"></button>
-							<!-- Modal -->
-							<div class="modal fade" th:id="deletar_+${usuario.id}" tabindex="-1"
-								aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">Excluir</h5>
-											<button type="button" class="btn-close" data-bs-dismiss="modal"
-												aria-label="Close"></button>
-										</div>
-										<div class="modal-body">
-											<p>Deseja realmente excluir esse usuário?</p>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary"
-												data-bs-dismiss="modal">Voltar</button>
-											<div>
-												<a th:href="@{/usuarios/excluir/{id}(id=${usuario.id})}"><button
-														type="submit" class="btn btn-danger">Confirmar</button></a>
+		<div class="card-body">
+			<table class="table table-striped table-condensed">
+				<thead>
+					<tr>
+						<th scope="col">ID</th>
+						<th scope="col">Nome</th>
+						<th scope="col">Nome de usuário</th>
+						<th scope="col">Permissão</th>
+						<th scope="col">Senha</th>
+						<th scope="col">Editar</th>
+						<th scope="col">Excluir</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="usuario : ${usuarios}">
+						<td><span th:text="${usuario.id}"></span></td>
+						<td><span th:text="${usuario.nome}"></span></td>
+						<td><span th:text="${usuario.nomeUsuario}"></span></td>
+						<td><span th:text="${usuario.role}"></span></td>
+						<td><span th:text="${usuario.senha}"></span></td>
+						<td><a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}"><button type="submit"
+									class="btn btn-default"><img
+										src="/bootstrap-5.1.3-dist/icons/icons/pencil-fill.svg"></button></a></td>
+						<td>
+							<a><button type="button" class="btn btn-default" data-bs-toggle="modal"
+									th:attr="data-bs-target='#deletar_'+${usuario.id}"><img
+										src="/bootstrap-5.1.3-dist/icons/icons/trash-fill.svg"></button>
+								<!-- Modal -->
+								<div class="modal fade" th:id="deletar_+${usuario.id}" tabindex="-1"
+									aria-labelledby="exampleModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel">Excluir</h5>
+												<button type="button" class="btn-close" data-bs-dismiss="modal"
+													aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+												<p>Deseja realmente excluir esse usuário?</p>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-bs-dismiss="modal">Voltar</button>
+												<div>
+													<a th:href="@{/usuarios/excluir/{id}(id=${usuario.id})}"><button
+															type="submit" class="btn btn-danger">Confirmar</button></a>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<script type="text/javascript" src="../bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
 	</div>
-</body>
+</div>
 
 </html>
