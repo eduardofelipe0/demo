@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,8 +25,11 @@ public interface EntradaRepository extends JpaRepository<Entrada, Long> {
 	@Query("select entra from Entrada entra where entra.placa = :#{#ent. placa}")
 	Optional<Entrada> findEntradaPlaca(@Param("ent") Entrada ent);
 	
-	//@Query("select entra from Entrada entra where entra.hora_entrada like %?1%")
-	//List<Entrada> findEntradaByData(LocalDateTime horaEntrada);
+	@Query("select entra from Entrada entra where entra.horaEntrada = :horaEntrada")
+	List<Entrada> findEntradaByData(LocalDate horaEntrada);
+	
+	@Query("select entra from Entrada entra where entra.nomeMotorista like %?1%")
+	List<Entrada> findEntradaByName(String nomeMotorista);
 	
 	@Query("from Entrada e where e.status = :status")
 	List<Entrada> findEntradaByStatus(StatusEntrada status);

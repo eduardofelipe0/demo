@@ -12,7 +12,6 @@ public class HomeController {
 
 	@GetMapping()
 	public ModelAndView home(ModelMap model) {
-		//model.addAttribute("usuarios", dao.getTodos());
 		model.addAttribute("conteudo", "entrada/home");
 		return new ModelAndView("layout", model);
 	}

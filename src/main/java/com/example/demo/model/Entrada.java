@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Entrada implements Serializable{
@@ -25,7 +27,8 @@ public class Entrada implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private LocalDateTime horaEntrada;
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	private LocalDate horaEntrada;
 	
 	@NotNull
 	@Size(max = 30)
@@ -61,10 +64,10 @@ public class Entrada implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public LocalDateTime getHoraEntrada() {
+	public LocalDate getHoraEntrada() {
 		return horaEntrada;
 	}
-	public void setHoraEntrada(LocalDateTime horaEntrada) {
+	public void setHoraEntrada(LocalDate horaEntrada) {
 		this.horaEntrada = horaEntrada;
 	}
 	public String getVeiculo() {
@@ -132,8 +135,8 @@ public class Entrada implements Serializable{
 		return Objects.equals(placa, other.placa);
 	}
 	
-	public String converterData(LocalDateTime data) {
-    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+	public String converterData(LocalDate data) {
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     	String dataFormatada = formatter.format(data);
     	return dataFormatada;
     }

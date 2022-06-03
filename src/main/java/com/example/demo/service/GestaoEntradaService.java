@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -41,7 +41,13 @@ public class GestaoEntradaService {
 	public List<Entrada> buscarPlaca(String placa) {
 		return (List<Entrada>) entradaRepository.findEntradaByPlaca(placa);
 	}
-
+	
+	public List<Entrada> buscarData(LocalDate horaEntrada){
+		return (List<Entrada>) entradaRepository.findEntradaByData(horaEntrada);
+	}
+	public List<Entrada> buscarPorNome(String nomeMotorista) {
+		return (List<Entrada>) entradaRepository.findEntradaByName(nomeMotorista);
+	}
 	public String usuarioLogado() {
 		ControllerUsuario uc = new ControllerUsuario();
 		String nome = uc.getUsuario().getNomeUsuario();
@@ -56,7 +62,7 @@ public class GestaoEntradaService {
 		} else { }*/
 			caracteres(entrada);
 			entrada.setStatus(StatusEntrada.ABERTA);
-			entrada.setHoraEntrada(LocalDateTime.now());
+			entrada.setHoraEntrada(LocalDate.now());
 			entradaRepository.save(entrada);
 	}
 

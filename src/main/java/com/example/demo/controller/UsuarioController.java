@@ -38,9 +38,12 @@ public class UsuarioController {
 	}
 	
 	@RequestMapping(value="/cadastrar", method=RequestMethod.POST)
-	public ModelAndView cadastrar(Usuario usuario) {
+	public String cadastrar(Usuario usuario, RedirectAttributes atributes) {
 		ModelAndView modelAndView = new ModelAndView();
-		ModelMap model = new ModelMap();
+		gestaoUsuarioService.cadastrar(usuario);
+		atributes.addFlashAttribute("message", "Usuário cadastrado com sucesso.");
+		return "redirect:/usuarios/new";
+		/*ModelMap model = new ModelMap();
 		
 		try {
 			gestaoUsuarioService.cadastrar(usuario);
@@ -49,7 +52,7 @@ public class UsuarioController {
 		} catch (Exception e) {
 			model.addAttribute("conteudo", "usuario/cadastroUsuario");
 		}
-		return modelAndView;
+		return modelAndView;*/
 	}
 	
 	@RequestMapping(value="/listar", method=RequestMethod.GET)
@@ -62,14 +65,14 @@ public class UsuarioController {
 	
 	@RequestMapping(value = "/permissao", method = RequestMethod.GET)
     public ModelAndView listarPorStatus(@RequestParam(value = "role", required = false) Role permiss) {
-		ModelAndView modelAndView = new ModelAndView();
+		ModelMap model = new ModelMap();
 		List<Usuario> usuarios = gestaoUsuarioService.listarPorRole(permiss);
         if (permiss == null) {
             return new ModelAndView("redirect:/usuarios/listar");
         }
-        modelAndView.setViewName("usuario/listaUsuarios");
-        modelAndView.addObject("usuarios", usuarios);
-        return modelAndView;
+        model.addAttribute("usuarios", usuarios);
+        model.addAttribute("conteudo", "usuario/listaUsuarios");
+        return new ModelAndView("layout", model);
     }
 
 	@ModelAttribute("roles")
@@ -79,11 +82,11 @@ public class UsuarioController {
 	
 	@RequestMapping(value="/buscar", method=RequestMethod.GET)
 	public ModelAndView buscar(@RequestParam(value = "buscarUsuario", required = false) String buscarUsuario) {
-		ModelAndView modelAndView = new ModelAndView();
+		ModelMap model = new ModelMap();
 		List<Usuario> usuarios = gestaoUsuarioService.buscarNome(buscarUsuario);
-		modelAndView.setViewName("usuario/listaUsuarios");
-		modelAndView.addObject("usuarios", usuarios);
-		return modelAndView;
+		model.addAttribute("usuarios", usuarios);
+        model.addAttribute("conteudo", "usuario/listaUsuarios");
+        return new ModelAndView("layout", model);
 	}
 	
 	@RequestMapping(value="/editar/{id}", method=RequestMethod.GET)

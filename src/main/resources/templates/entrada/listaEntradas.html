@@ -5,45 +5,68 @@
 	<br> <br>
 	<h1>Entradas e saídas</h1>
 	<hr>
-	<nav class="navbar navbar-light" style="background-color:#DCDCDC;">
+	<nav class="navbar navbar-expand-lg bg-light">
 		<div class="container-fluid">
-			<!-- Botão para voltar página -->
 			<a href="/home"><button class="btn btn-secondary" type="submit">Voltar</button></a>
-			<!-- Botão para realizar cadastro -->
-			<a href="/entradas/new"><button class="btn btn-secondary">Adicionar <img
-						src="/bootstrap-5.1.3-dist/icons/icons/plus-circle.svg"></button></a>
-			<!-- Form para busca de entradas -->
-			<form class="form" action="buscar" method="GET">
-				<input type="text" class="form-control" name="buscarEntrada" placeholder="Pesquisar">
-				<button class="btn btn-secondary" type="submit"><img
-						src="/bootstrap-5.1.3-dist/icons/icons/search.svg"></button>
-			</form>
-			<!-- Botão para gerar relatório -->
-			<a sec:authorize="hasAuthority('ADMIN')" href="/entradas/export/pdf"><button class="btn btn-secondary"
-					type="submit">
-					<img src="/bootstrap-5.1.3-dist/icons/icons/download.svg"></button></a>
-			<!-- Form para listar entradas por status -->
-			<form class="form" th:action="@{/entradas/status}" method="GET">
-				<select name="statusEntrada" class="form-select">
-					<option value="">Filtro por Status</option>
-					<a href="/entradas/listar">
-						<option value="">TODAS</option>
-					</a>
-					<option th:each="status : ${stattus}" th:value="${status.name}" th:text="${status.name}">
-					</option>
-				</select>
-				<button type="submit" class="btn btn-secondary"><img
-						src="/bootstrap-5.1.3-dist/icons/icons/list-ul.svg"></button>
-			</form>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<br>
+					<li class="nav-item dropdown">
+						<form class="d-flex" role="switch" th:action="@{/entradas/status}" method="GET">
+							<select name="statusEntrada" class="form-select me-1">
+								<option value="">Filtro por Status</option>
+								<a href="/entradas/listar">
+									<option value="">Todas</option>
+								</a>
+								<option th:each="status : ${stattus}" th:value="${status.name}" th:utext="${status}">
+								</option>
+							</select>
+							<button class="btn btn-secondary" type="submit"><img
+									src="/bootstrap-5.1.3-dist/icons/icons/list-ul.svg"></button>
+						</form>
+					</li>
+					<br>
+					<li class="nav-item">
+						<form class="d-flex" role="search" action="data" method="GET">
+							<input class="form-control me-1" name="buscarData" type="date">
+							<button class="btn btn-secondary" type="submit"><img
+									src="/bootstrap-5.1.3-dist/icons/icons/search.svg"></button>
+						</form>
+					</li>
+					<br>
+					<li class="nav-item">
+						<a href="/entradas/new"><button class="btn btn-secondary">Adicionar <img
+									src="/bootstrap-5.1.3-dist/icons/icons/plus-circle.svg"></button></a>
+					</li>
+					<br>
+					<li class="nav-item">
+						<a sec:authorize="hasAuthority('ADMIN')" href="/entradas/export/pdf"><button
+								class="btn btn-secondary" type="submit">
+								<img src="/bootstrap-5.1.3-dist/icons/icons/download.svg"></button></a>
+					</li>
+					<br>
+				</ul>
+				<form class="d-flex" role="search" action="buscar" method="GET">
+					<input class="form-control me-1" name="buscarEntrada" type="search" placeholder="Pesquisar"
+						aria-label="Search">
+					<button class="btn btn-outline-secondary" type="submit"><img
+							src="/bootstrap-5.1.3-dist/icons/icons/search.svg"></button>
+				</form>
+			</div>
 		</div>
 	</nav>
 	<br><br>
 	<div class="card">
-	<div  th:class="${#strings.isEmpty(message)} ? '' : 'card bg-success'">
-		<div class= "card-header">
-			<span th:text="${#strings.isEmpty(message)} ? '' : ${message}"> </span>
+		<div th:class="${#strings.isEmpty(message)} ? '' : 'card bg-success'">
+			<div class="card-header">
+				<span th:text="${#strings.isEmpty(message)} ? '' : ${message}"> </span>
+			</div>
 		</div>
-	</div>
 		<div class="card-body">
 			<table class="table table-striped table-condensed">
 				<thead>
@@ -71,7 +94,7 @@
 					<tr th:each="entrada : ${entradas}">
 						<td><span th:text="${entrada.id}"></span></td>
 						<td><span th:text="${entrada.nomeUsuario}"></span></td>
-						<td><span th:text="${#temporals.format(entrada.horaEntrada, 'dd/MM/yyyy HH:mm')}"></span>
+						<td><span th:text="${#temporals.format(entrada.horaEntrada, 'dd/MM/yyyy')}"></span>
 						</td>
 						<td><span th:text="${entrada.tipo}"></span></td>
 						<td><span th:text="${entrada.veiculo}"></span></td>

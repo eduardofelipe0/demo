@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 public enum Role {
 	
-	ADMIN("Administrador"), USER("Padrão");
+	ADMIN("Administrador"), USER("Padrão"), SUP("Supervisor");
 	
 	private Role(String descricao) {
 		this.descricao = descricao;

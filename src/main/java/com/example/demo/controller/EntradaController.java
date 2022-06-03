@@ -3,12 +3,14 @@ package com.example.demo.controller;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -48,18 +50,24 @@ public class EntradaController {
 	}
 
 	@RequestMapping(value = "/registrar", method = RequestMethod.POST)
-	public ModelAndView registrar(Entrada entrada) {
-		ModelAndView modelAndView = new ModelAndView();
-		ModelMap model = new ModelMap();
+	public String registrar(Entrada entrada, RedirectAttributes atributes) throws Exception {
+		//ModelAndView modelAndView = new ModelAndView();
+		gestaoEntradaService.criar(entrada);
+		atributes.addFlashAttribute("message", "Entrada registrada com sucesso.");
+		return "redirect:/entradas/new";
+		//ModelMap model = new ModelMap();
 
-		try {
+		/*try {
 			gestaoEntradaService.criar(entrada);
-			model.addAttribute("conteudo", "entrada/home");
-			return new ModelAndView("layout", model);
+			//model.addAttribute("conteudo", "entrada/registro");
+			atributes.addFlashAttribute("message", "Entrada registrada com sucesso.");
+			//return new ModelAndView("layout", model);
+			modelAndView.setViewName("entrada/registro");
 		} catch (Exception e) {
-			model.addAttribute("conteudo", "entrada/registro");
+			//model.addAttribute("conteudo", "entrada/registro");
+			modelAndView.setViewName("entrada/registro");
 		}
-		return modelAndView;
+		return modelAndView;*/
 	}
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
@@ -74,11 +82,11 @@ public class EntradaController {
     public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
 		
         response.setContentType("application/pdf");
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        DateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
         String currentDateTime = dateFormatter.format(new Date());
          
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=entrada_" + currentDateTime + ".pdf";
+        String headerValue = "attachment; filename=Relatório de Entradas_" + currentDateTime + ".pdf";
         response.setHeader(headerKey, headerValue);
          
         List<Entrada> listaEntradas = gestaoEntradaService.listAll();
@@ -90,23 +98,34 @@ public class EntradaController {
 
 	@RequestMapping(value = "/buscar", method = RequestMethod.GET)
 	public ModelAndView buscar(@RequestParam(value = "buscarEntrada", required = false) String buscarEntrada) {
-		ModelAndView modelAndView = new ModelAndView();
+		ModelMap model = new ModelMap();
 		List<Entrada> entradas = gestaoEntradaService.buscarPlaca(buscarEntrada);
-		modelAndView.setViewName("entrada/listaEntradas");
-		modelAndView.addObject("entradas", entradas);
-		return modelAndView;
+		model.addAttribute("entradas", entradas);
+        model.addAttribute("conteudo", "entrada/listaEntradas");
+        return new ModelAndView("layout", model);
+        //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+        //th:text="${#temporals.format(entrada.horaSaida, 'dd/MM/yyyy HH:mm')}"
+	}
+	
+	@RequestMapping(value = "/data", method = RequestMethod.GET)
+	public ModelAndView buscarData(@RequestParam(value = "buscarData", required = false)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate buscarData) {
+		ModelMap model = new ModelMap();
+		List<Entrada> entradas = gestaoEntradaService.buscarData(buscarData);
+		model.addAttribute("entradas", entradas);
+        model.addAttribute("conteudo", "entrada/listaEntradas");
+        return new ModelAndView("layout", model);
 	}
 
 	@RequestMapping(value = "/status", method = RequestMethod.GET)
 	public ModelAndView listarPorStatus(@RequestParam(value = "statusEntrada", required = false) StatusEntrada status) {
-		ModelAndView modelAndView = new ModelAndView();
+		ModelMap model = new ModelMap();
 		List<Entrada> entradas = gestaoEntradaService.listarPorStatus(status);
 		if (status == null) {
 			return new ModelAndView("redirect:/entradas/listar");
 		}
-		modelAndView.setViewName("entrada/listaEntradas");
-		modelAndView.addObject("entradas", entradas);
-		return modelAndView;
+		model.addAttribute("entradas", entradas);
+        model.addAttribute("conteudo", "entrada/listaEntradas");
+        return new ModelAndView("layout", model);
 	}
 
 	@ModelAttribute("stattus")

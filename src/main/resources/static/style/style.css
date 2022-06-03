@@ -14,3 +14,6 @@
 	transform: scale(1.1);
     transition: all;
 }
+.nav-item{
+	 margin-left: 20px;
+}
