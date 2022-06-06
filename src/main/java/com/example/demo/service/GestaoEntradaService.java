@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +31,6 @@ public class GestaoEntradaService {
 		} else {
 			entrada.setHoraSaida(LocalDateTime.now());
 			entrada.setStatus(StatusEntrada.FINALIZADA);
-			;
 			entradaRepository.save(entrada);
 		}
 	}
@@ -41,13 +42,19 @@ public class GestaoEntradaService {
 	public List<Entrada> buscarPlaca(String placa) {
 		return (List<Entrada>) entradaRepository.findEntradaByPlaca(placa);
 	}
-	
-	public List<Entrada> buscarData(LocalDate horaEntrada){
+
+	public List<Entrada> buscarData(LocalDate horaEntrada) {
 		return (List<Entrada>) entradaRepository.findEntradaByData(horaEntrada);
 	}
+
+	public List<Entrada> buscarDataIntervalo(LocalDateTime intervaloDatas) {
+		return (List<Entrada>) entradaRepository.findEntradaByDataHora(intervaloDatas, intervaloDatas);
+	}
+
 	public List<Entrada> buscarPorNome(String nomeMotorista) {
 		return (List<Entrada>) entradaRepository.findEntradaByName(nomeMotorista);
 	}
+
 	public String usuarioLogado() {
 		ControllerUsuario uc = new ControllerUsuario();
 		String nome = uc.getUsuario().getNomeUsuario();
@@ -55,15 +62,18 @@ public class GestaoEntradaService {
 	}
 
 	public void criar(Entrada entrada) throws Exception {
-		
-		/* Optional<Entrada> entra = entradaRepository.findEntradaPlaca(entrada);
-		if (entra.isPresent()) {
-			System.out.println("Erro!");
-		} else { }*/
-			caracteres(entrada);
-			entrada.setStatus(StatusEntrada.ABERTA);
-			entrada.setHoraEntrada(LocalDate.now());
-			entradaRepository.save(entrada);
+
+		/*
+		 * Optional<Entrada> entra = entradaRepository.findEntradaPlaca(entrada); if
+		 * (entra.isPresent()) { System.out.println("Erro!"); } else { }
+		 */
+		SecurityContext sc = SecurityContextHolder.getContext();
+		String username = sc.getAuthentication().getName();
+		caracteres(entrada);
+		entrada.setStatus(StatusEntrada.ABERTA);
+		entrada.setNomeUsuario(username);
+		entrada.setHoraEntrada(LocalDate.now());
+		entradaRepository.save(entrada);
 	}
 
 	public List<Entrada> listar() {

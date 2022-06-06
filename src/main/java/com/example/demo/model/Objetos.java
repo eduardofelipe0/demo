@@ -41,6 +41,9 @@ public class Objetos {
 	@Enumerated(EnumType.STRING)
 	private StatusEntrada status;
 
+	@Enumerated(EnumType.STRING)
+	private TipoEntradaObjeto tipoEntradaObjeto;
+
 	public Long getId() {
 		return id;
 	}
@@ -95,6 +98,14 @@ public class Objetos {
 
 	public void setStatus(StatusEntrada status) {
 		this.status = status;
+	}
+
+	public TipoEntradaObjeto getTipoEntradaObjeto() {
+		return tipoEntradaObjeto;
+	}
+
+	public void setTipoEntradaObjeto(TipoEntradaObjeto tipoEntradaObjeto) {
+		this.tipoEntradaObjeto = tipoEntradaObjeto;
 	}
 
 	@Override

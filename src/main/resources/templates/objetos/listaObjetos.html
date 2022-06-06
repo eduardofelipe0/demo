@@ -58,6 +58,7 @@
 						<th scope="col">Data e hora de entrada</th>
 						<th scope="col">Funcionário</th>
 						<th scope="col">Comentário</th>
+						<th scope="col">Tipo de entrada</th>
 						<th scope="col">Status</th>
 						<th scope="col">Data e hora de saída</th>
 						<th scope="col">Editar</th>
@@ -72,6 +73,7 @@
 						<td><span th:text="${#temporals.format(objeto.horaDeEntrada, 'dd/MM/yyyy HH:mm')}"></span></td>
 						<td><span th:text="${objeto.funcionario}"></span></td>
 						<td><span th:text="${objeto.comentario}"></span></td>
+						<td><span th:text="${objeto.tipoEntradaObjeto}"></span></td>
 						<td><span th:text="${objeto.status}"></span></td>
 						<td><span th:text="${#temporals.format(objeto.horaDeSaida, 'dd/MM/yyyy HH:mm')}"></span></td>
 						<td><a th:href="@{/objetos/editar/{id}(id=${objeto.id})}"><button type="submit"

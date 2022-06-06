@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.model.Objetos;
+import com.example.demo.model.TipoEntradaObjeto;
 import com.example.demo.repository.ObjetosRepository;
 import com.example.demo.service.GestaoObjetoService;
 
@@ -22,31 +23,27 @@ public class ObjetoController {
 	private GestaoObjetoService gestaoObjetoService;
 	@Autowired
 	private ObjetosRepository objetosRepository;
-	
-	@RequestMapping(value="/new", method=RequestMethod.GET )
+
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public ModelAndView formulario() {
 		ModelAndView modelAndView = new ModelAndView();
 		Objetos objeto = new Objetos();
 		modelAndView.setViewName("objetos/cadastrar");
 		modelAndView.addObject("objetoAtual", objeto);
+		modelAndView.addObject("tipoObjetos", TipoEntradaObjeto.values());
 		return modelAndView;
 	}
-	
-	@RequestMapping(value="/cadastrar", method=RequestMethod.POST)
+
+	@RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
 	public String cadastrar(Objetos objeto, RedirectAttributes atributes) {
-		//ModelAndView modelAndView = new ModelAndView();
-		//ModelMap model = new ModelMap();
-		gestaoObjetoService.cadastrar(objeto);
-		atributes.addFlashAttribute("message", "Entrada de objeto registrada com sucesso.");
-		return "redirect:/objetos/new";
-		/*try {
+
+		try {
 			gestaoObjetoService.cadastrar(objeto);
-			model.addAttribute("conteudo", "entrada/home");
-			return new ModelAndView("layout", model);
+			atributes.addFlashAttribute("message", "Entrada de objeto registrada com sucesso.");
+			return "redirect:/objetos/new";
 		} catch (Exception e) {
-			model.addAttribute("conteudo", "objetos/cadastrar");
+			return "e";
 		}
-		return modelAndView;*/
 	}
 
 	@GetMapping("/listar")
@@ -56,9 +53,9 @@ public class ObjetoController {
 		model.addAttribute("conteudo", "objetos/listaObjetos");
 		return new ModelAndView("layout", model);
 	}
-	
-	@RequestMapping(value="/editar/{id}", method=RequestMethod.GET)
-	public ModelAndView editar(@PathVariable ("id") Long id, RedirectAttributes atributes) {
+
+	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
+	public ModelAndView editar(@PathVariable("id") Long id, RedirectAttributes atributes) {
 		ModelAndView modelAndView = new ModelAndView();
 		Objetos objeto = gestaoObjetoService.buscar(id);
 		modelAndView.setViewName("objetos/cadastrar");
@@ -66,15 +63,15 @@ public class ObjetoController {
 		modelAndView.addObject("objetoAtual", objeto);
 		return modelAndView;
 	}
-	
-	@RequestMapping(value="/excluir/{id}", method=RequestMethod.GET )
+
+	@RequestMapping(value = "/excluir/{id}", method = RequestMethod.GET)
 	public String remover(@PathVariable Long id, RedirectAttributes atributes) {
 		Objetos objeto = objetosRepository.findById(id).get();
 		objetosRepository.delete(objeto);
 		atributes.addFlashAttribute("message", "Objeto removido com sucesso.");
-	    return "redirect:/objetos/listar";
+		return "redirect:/objetos/listar";
 	}
-	
+
 	@RequestMapping(value = "/finalizar/{id}", method = RequestMethod.GET)
 	public String finalizar(@PathVariable Long id, RedirectAttributes atributes) {
 		gestaoObjetoService.finalizar(id);

@@ -51,69 +51,60 @@ public class EntradaController {
 
 	@RequestMapping(value = "/registrar", method = RequestMethod.POST)
 	public String registrar(Entrada entrada, RedirectAttributes atributes) throws Exception {
-		//ModelAndView modelAndView = new ModelAndView();
-		gestaoEntradaService.criar(entrada);
-		atributes.addFlashAttribute("message", "Entrada registrada com sucesso.");
-		return "redirect:/entradas/new";
-		//ModelMap model = new ModelMap();
 
-		/*try {
+		try {
 			gestaoEntradaService.criar(entrada);
-			//model.addAttribute("conteudo", "entrada/registro");
 			atributes.addFlashAttribute("message", "Entrada registrada com sucesso.");
-			//return new ModelAndView("layout", model);
-			modelAndView.setViewName("entrada/registro");
+			return "redirect:/entradas/new";
 		} catch (Exception e) {
-			//model.addAttribute("conteudo", "entrada/registro");
-			modelAndView.setViewName("entrada/registro");
+			return "e";
 		}
-		return modelAndView;*/
 	}
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public ModelAndView listarEntradas() {
 		ModelMap model = new ModelMap();
 		model.addAttribute("entradas", gestaoEntradaService.listar());
-        model.addAttribute("conteudo", "entrada/listaEntradas");
-        return new ModelAndView("layout", model);
+		model.addAttribute("conteudo", "entrada/listaEntradas");
+		return new ModelAndView("layout", model);
 	}
-	
+
 	@RequestMapping(value = "/export/pdf", method = RequestMethod.GET)
-    public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
-		
-        response.setContentType("application/pdf");
-        DateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
-        String currentDateTime = dateFormatter.format(new Date());
-         
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=Relatório de Entradas_" + currentDateTime + ".pdf";
-        response.setHeader(headerKey, headerValue);
-         
-        List<Entrada> listaEntradas = gestaoEntradaService.listAll();
-         
-        EntradaPdfExporter exporter = new EntradaPdfExporter(listaEntradas);
-        exporter.export(response);
-         
-    }
+	public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
+
+		response.setContentType("application/pdf");
+		DateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+		String currentDateTime = dateFormatter.format(new Date());
+
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=Relatório de Entradas_" + currentDateTime + ".pdf";
+		response.setHeader(headerKey, headerValue);
+
+		List<Entrada> listaEntradas = gestaoEntradaService.listAll();
+
+		EntradaPdfExporter exporter = new EntradaPdfExporter(listaEntradas);
+		exporter.export(response);
+
+	}
 
 	@RequestMapping(value = "/buscar", method = RequestMethod.GET)
 	public ModelAndView buscar(@RequestParam(value = "buscarEntrada", required = false) String buscarEntrada) {
 		ModelMap model = new ModelMap();
 		List<Entrada> entradas = gestaoEntradaService.buscarPlaca(buscarEntrada);
 		model.addAttribute("entradas", entradas);
-        model.addAttribute("conteudo", "entrada/listaEntradas");
-        return new ModelAndView("layout", model);
-        //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-        //th:text="${#temporals.format(entrada.horaSaida, 'dd/MM/yyyy HH:mm')}"
+		model.addAttribute("conteudo", "entrada/listaEntradas");
+		return new ModelAndView("layout", model);
+		// @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+		// th:text="${#temporals.format(entrada.horaSaida, 'dd/MM/yyyy HH:mm')}"
 	}
-	
+
 	@RequestMapping(value = "/data", method = RequestMethod.GET)
-	public ModelAndView buscarData(@RequestParam(value = "buscarData", required = false)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate buscarData) {
+	public ModelAndView buscarData(@RequestParam(value = "buscarData", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate buscarData) {
 		ModelMap model = new ModelMap();
 		List<Entrada> entradas = gestaoEntradaService.buscarData(buscarData);
 		model.addAttribute("entradas", entradas);
-        model.addAttribute("conteudo", "entrada/listaEntradas");
-        return new ModelAndView("layout", model);
+		model.addAttribute("conteudo", "entrada/listaEntradas");
+		return new ModelAndView("layout", model);
 	}
 
 	@RequestMapping(value = "/status", method = RequestMethod.GET)
@@ -124,8 +115,8 @@ public class EntradaController {
 			return new ModelAndView("redirect:/entradas/listar");
 		}
 		model.addAttribute("entradas", entradas);
-        model.addAttribute("conteudo", "entrada/listaEntradas");
-        return new ModelAndView("layout", model);
+		model.addAttribute("conteudo", "entrada/listaEntradas");
+		return new ModelAndView("layout", model);
 	}
 
 	@ModelAttribute("stattus")
@@ -147,7 +138,8 @@ public class EntradaController {
 		Entrada entrada = gestaoEntradaService.buscar(id);
 		if (entrada.getStatus() == StatusEntrada.FINALIZADA) {
 			throw new NegocioException("Esta entrada já foi finalizada, portanto não é mais possível editá-la.");
-			//atributes.addFlashAttribute("message", "Esta entrada já foi finalizada, portanto não é mais possível editá-la.");
+			// atributes.addFlashAttribute("message", "Esta entrada já foi finalizada,
+			// portanto não é mais possível editá-la.");
 		}
 		modelAndView.setViewName("entrada/registro");
 		modelAndView.addObject("entradaAtual", entrada);
@@ -161,7 +153,7 @@ public class EntradaController {
 		Entrada entrada = entradaRepository.findById(id).get();
 		entradaRepository.delete(entrada);
 		atributes.addFlashAttribute("message", "Entrada removida com sucesso.");
-	    return "redirect:/entradas/listar";
+		return "redirect:/entradas/listar";
 	}
 
 	@RequestMapping(value = "/finalizar/{id}", method = RequestMethod.GET)
