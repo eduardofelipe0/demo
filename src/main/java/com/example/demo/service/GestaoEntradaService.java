@@ -29,6 +29,9 @@ public class GestaoEntradaService {
 		if (entrada.getStatus().equals(StatusEntrada.FINALIZADA)) {
 			throw new NegocioException("Entrada já finalizada!");
 		} else {
+			SecurityContext sc = SecurityContextHolder.getContext();
+			String username = sc.getAuthentication().getName();
+			entrada.setUsuarioDaSaida(username);
 			entrada.setHoraSaida(LocalDateTime.now());
 			entrada.setStatus(StatusEntrada.FINALIZADA);
 			entradaRepository.save(entrada);
@@ -71,7 +74,7 @@ public class GestaoEntradaService {
 		String username = sc.getAuthentication().getName();
 		caracteres(entrada);
 		entrada.setStatus(StatusEntrada.ABERTA);
-		entrada.setNomeUsuario(username);
+		entrada.setUsuarioDaEntrada(username);
 		entrada.setHoraEntrada(LocalDate.now());
 		entradaRepository.save(entrada);
 	}

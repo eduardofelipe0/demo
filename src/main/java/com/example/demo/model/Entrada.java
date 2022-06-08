@@ -53,7 +53,10 @@ public class Entrada implements Serializable {
 	private StatusEntrada status;
 
 	@Size(max = 50)
-	private String nomeUsuario;
+	private String usuarioDaEntrada;
+
+	@Size(max = 50)
+	private String usuarioDaSaida;
 
 	private LocalDateTime horaSaida;
 
@@ -124,20 +127,28 @@ public class Entrada implements Serializable {
 		this.status = status;
 	}
 
-	public String getNomeUsuario() {
-		return nomeUsuario;
-	}
-
-	public void setNomeUsuario(String nomeUsuario) {
-		this.nomeUsuario = nomeUsuario;
-	}
-
 	public LocalDateTime getHoraSaida() {
 		return horaSaida;
 	}
 
 	public void setHoraSaida(LocalDateTime horaSaida) {
 		this.horaSaida = horaSaida;
+	}
+
+	public String getUsuarioDaEntrada() {
+		return usuarioDaEntrada;
+	}
+
+	public void setUsuarioDaEntrada(String usuarioDaEntrada) {
+		this.usuarioDaEntrada = usuarioDaEntrada;
+	}
+
+	public String getUsuarioDaSaida() {
+		return usuarioDaSaida;
+	}
+
+	public void setUsuarioDaSaida(String usuarioDaSaida) {
+		this.usuarioDaSaida = usuarioDaSaida;
 	}
 
 	public LocalDateTime getIntervaloDatas() {
