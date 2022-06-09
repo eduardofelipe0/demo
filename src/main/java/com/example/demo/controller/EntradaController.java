@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -102,6 +103,15 @@ public class EntradaController {
 	public ModelAndView buscarData(@RequestParam(value = "buscarData", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate buscarData) {
 		ModelMap model = new ModelMap();
 		List<Entrada> entradas = gestaoEntradaService.buscarData(buscarData);
+		model.addAttribute("entradas", entradas);
+		model.addAttribute("conteudo", "entrada/listaEntradas");
+		return new ModelAndView("layout", model);
+	}
+	
+	@RequestMapping(value = "/intervalo", method = RequestMethod.GET)
+	public ModelAndView intervaloDatas(@RequestParam(value = "intervaloDatas", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime buscarData1, LocalDateTime buscarData2) {
+		ModelMap model = new ModelMap();
+		List<Entrada> entradas = gestaoEntradaService.intervaloDatas(buscarData1, buscarData2);
 		model.addAttribute("entradas", entradas);
 		model.addAttribute("conteudo", "entrada/listaEntradas");
 		return new ModelAndView("layout", model);

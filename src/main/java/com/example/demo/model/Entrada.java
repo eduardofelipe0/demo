@@ -27,8 +27,8 @@ public class Entrada implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
-	private LocalDate horaEntrada;
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+	private LocalDateTime horaEntrada;
 
 	@NotNull
 	@Size(max = 30)
@@ -71,11 +71,11 @@ public class Entrada implements Serializable {
 		this.id = id;
 	}
 
-	public LocalDate getHoraEntrada() {
+	public LocalDateTime getHoraEntrada() {
 		return horaEntrada;
 	}
 
-	public void setHoraEntrada(LocalDate horaEntrada) {
+	public void setHoraEntrada(LocalDateTime horaEntrada) {
 		this.horaEntrada = horaEntrada;
 	}
 
@@ -176,7 +176,7 @@ public class Entrada implements Serializable {
 		return Objects.equals(placa, other.placa);
 	}
 
-	public String converterData(LocalDate data) {
+	public String converterData(LocalDateTime data) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		String dataFormatada = formatter.format(data);
 		return dataFormatada;

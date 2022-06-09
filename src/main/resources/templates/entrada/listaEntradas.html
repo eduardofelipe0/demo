@@ -32,8 +32,9 @@
 					</li>
 					<br>
 					<li class="nav-item">
-						<form class="d-flex" role="search" action="data" method="GET">
-							<input class="form-control me-1" name="buscarData" type="date">
+						<form class="d-flex" role="search" action="intervalo" method="GET">
+							<input class="form-control me-1" name="intervaloDatas" type="datetime-local">
+							<input class="form-control me-1" name="intervaloDatas" type="datetime-local">
 							<button class="btn btn-secondary" type="submit"><img
 									src="/bootstrap-5.1.3-dist/icons/icons/search.svg"></button>
 						</form>
@@ -95,7 +96,7 @@
 					<tr th:each="entrada : ${entradas}">
 						<td><span th:text="${entrada.id}"></span></td>
 						<td><span th:text="${entrada.usuarioDaEntrada}"></span></td>
-						<td><span th:text="${#temporals.format(entrada.horaEntrada, 'dd/MM/yyyy')}"></span></td>
+						<td><span th:text="${#temporals.format(entrada.horaEntrada, 'dd/MM/yyyy HH:mm')}"></span></td>
 						<td><span th:text="${entrada.tipo}"></span></td>
 						<td><span th:text="${entrada.veiculo}"></span></td>
 						<td><span th:text="${entrada.placa}"></span></td>

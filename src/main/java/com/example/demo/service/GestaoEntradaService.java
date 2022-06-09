@@ -49,6 +49,10 @@ public class GestaoEntradaService {
 	public List<Entrada> buscarData(LocalDate horaEntrada) {
 		return (List<Entrada>) entradaRepository.findEntradaByData(horaEntrada);
 	}
+	
+	public List<Entrada> intervaloDatas(LocalDateTime horaEntrada, LocalDateTime horaEntrada1) {
+		return (List<Entrada>) entradaRepository.findEntradaByDataHora(horaEntrada, horaEntrada1);
+	}
 
 	public List<Entrada> buscarDataIntervalo(LocalDateTime intervaloDatas) {
 		return (List<Entrada>) entradaRepository.findEntradaByDataHora(intervaloDatas, intervaloDatas);
@@ -75,7 +79,7 @@ public class GestaoEntradaService {
 		caracteres(entrada);
 		entrada.setStatus(StatusEntrada.ABERTA);
 		entrada.setUsuarioDaEntrada(username);
-		entrada.setHoraEntrada(LocalDate.now());
+		entrada.setHoraEntrada(LocalDateTime.now());
 		entradaRepository.save(entrada);
 	}
 
