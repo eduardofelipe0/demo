@@ -25,7 +25,7 @@ public class Objetos {
 	private LocalDateTime horaDeEntrada;
 
 	@Size(max = 30)
-	private String porteiro;
+	private String porteiroDeEntrada;
 
 	@NotNull
 	@Size(max = 30)
@@ -44,6 +44,9 @@ public class Objetos {
 	@Enumerated(EnumType.STRING)
 	private TipoEntradaObjeto tipoEntradaObjeto;
 
+	@Size(max = 30)
+	private String porteiroDeSaida;
+
 	public Long getId() {
 		return id;
 	}
@@ -60,12 +63,12 @@ public class Objetos {
 		this.horaDeEntrada = horaDeEntrada;
 	}
 
-	public String getPorteiro() {
-		return porteiro;
+	public String getPorteiroDeEntrada() {
+		return porteiroDeEntrada;
 	}
 
-	public void setPorteiro(String porteiro) {
-		this.porteiro = porteiro;
+	public void setPorteiroDeEntrada(String porteiroDeEntrada) {
+		this.porteiroDeEntrada = porteiroDeEntrada;
 	}
 
 	public String getFuncionario() {
@@ -106,6 +109,14 @@ public class Objetos {
 
 	public void setTipoEntradaObjeto(TipoEntradaObjeto tipoEntradaObjeto) {
 		this.tipoEntradaObjeto = tipoEntradaObjeto;
+	}
+
+	public String getPorteiroDeSaida() {
+		return porteiroDeSaida;
+	}
+
+	public void setPorteiroDeSaida(String porteiroDeSaida) {
+		this.porteiroDeSaida = porteiroDeSaida;
 	}
 
 	@Override

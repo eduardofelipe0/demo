@@ -46,10 +46,61 @@
 					</li>
 					<br>
 					<li class="nav-item">
+						<a sec:authorize="hasAuthority('ADMIN')">
+							<a><button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+									data-bs-target="#exampleModal"><img
+										src="/bootstrap-5.1.3-dist/icons/icons/download.svg"></button></a>
+							<!-- Modal -->
+							<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+								aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Relatório de Entradas</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal"
+												aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<form>
+												<div class="mb-3">
+													<label for="recipient-name" class="col-form-label">Data
+														inicial:</label>
+													<input type="datetime-local" class="form-control"
+														id="recipient-name">
+												</div>
+												<div class="mb-3">
+													<label for="message-text" class="col-form-label">Data final:</label>
+													<input type="datetime-local" class="form-control" id="message-text">
+												</div>
+												<div class="mb-3">
+													<label class="col-form-label">Selecione o status da entrada:</label>
+						 							<select name="statusEntrada" class="form-select me-1">
+														<option value="">Selecione...</option>
+														<a href="/entradas/listar">
+															<option value="">Todas</option>
+														</a>
+														<option th:each="status : ${stattus}" th:value="${status.name}"
+															th:utext="${status}">
+														</option>
+													</select>
+												</div>
+											</form>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">Voltar</button>
+											<button type="button" class="btn btn-primary">Obter relatório</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+					</li>
+					<!-- <li class="nav-item">
 						<a sec:authorize="hasAuthority('ADMIN')" href="/entradas/export/pdf"><button
 								class="btn btn-secondary" type="submit">
 								<img src="/bootstrap-5.1.3-dist/icons/icons/download.svg"></button></a>
-					</li>
+					</li> -->
 					<br>
 				</ul>
 				<form class="d-flex" role="search" action="buscar" method="GET">

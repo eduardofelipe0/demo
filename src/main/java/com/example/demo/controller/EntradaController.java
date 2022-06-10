@@ -100,16 +100,19 @@ public class EntradaController {
 	}
 
 	@RequestMapping(value = "/data", method = RequestMethod.GET)
-	public ModelAndView buscarData(@RequestParam(value = "buscarData", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate buscarData) {
+	public ModelAndView buscarData(
+			@RequestParam(value = "buscarData", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate buscarData) {
 		ModelMap model = new ModelMap();
 		List<Entrada> entradas = gestaoEntradaService.buscarData(buscarData);
 		model.addAttribute("entradas", entradas);
 		model.addAttribute("conteudo", "entrada/listaEntradas");
 		return new ModelAndView("layout", model);
 	}
-	
+
 	@RequestMapping(value = "/intervalo", method = RequestMethod.GET)
-	public ModelAndView intervaloDatas(@RequestParam(value = "intervaloDatas", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime buscarData1, LocalDateTime buscarData2) {
+	public ModelAndView intervaloDatas(
+			@RequestParam(value = "intervaloDatas", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime buscarData1,
+			LocalDateTime buscarData2) {
 		ModelMap model = new ModelMap();
 		List<Entrada> entradas = gestaoEntradaService.intervaloDatas(buscarData1, buscarData2);
 		model.addAttribute("entradas", entradas);
@@ -134,22 +137,13 @@ public class EntradaController {
 		return StatusEntrada.values();
 	}
 
-	/*
-	 * private void usuarioLogado() { Authentication logado =
-	 * SecurityContextHolder.getContext().getAuthentication(); if (!(logado
-	 * instanceof AnonymousAuthenticationToken)) { String nomeUsuario =
-	 * logado.getName(); usuario =
-	 * usuarioRepository.findByUsuarioByNomeUsuario(nomeUsuario).get(0); } }
-	 */
-
 	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
 	public ModelAndView editar(@PathVariable("id") Long id, RedirectAttributes atributes) {
 		ModelAndView modelAndView = new ModelAndView();
 		Entrada entrada = gestaoEntradaService.buscar(id);
 		if (entrada.getStatus() == StatusEntrada.FINALIZADA) {
 			throw new NegocioException("Esta entrada já foi finalizada, portanto não é mais possível editá-la.");
-			// atributes.addFlashAttribute("message", "Esta entrada já foi finalizada,
-			// portanto não é mais possível editá-la.");
+			// atributes.addFlashAttribute("message", "Esta entrada já foi finalizada, portanto não é mais possível editá-la.");
 		}
 		modelAndView.setViewName("entrada/registro");
 		modelAndView.addObject("entradaAtual", entrada);
@@ -163,14 +157,15 @@ public class EntradaController {
 		Entrada entrada = entradaRepository.findById(id).get();
 		entradaRepository.delete(entrada);
 		atributes.addFlashAttribute("message", "Entrada removida com sucesso.");
-		return "redirect:/entradas/listar";
+		return "redirect:/entradas/status?statusEntrada=ABERTA";
+		//return "redirect:/entradas/listar";
 	}
 
 	@RequestMapping(value = "/finalizar/{id}", method = RequestMethod.GET)
 	public String finalizar(@PathVariable Long id, RedirectAttributes atributes) {
 		gestaoEntradaService.finalizar(id);
 		atributes.addFlashAttribute("message", "Saída registrada com sucesso.");
-		return "redirect:/entradas/listar";
+		return "redirect:/entradas/status?statusEntrada=ABERTA";
 	}
 
 }

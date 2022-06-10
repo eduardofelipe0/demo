@@ -1,12 +1,16 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -52,6 +56,24 @@ public class ObjetoController {
 		model.addAttribute("objetos", gestaoObjetoService.listar());
 		model.addAttribute("conteudo", "objetos/listaObjetos");
 		return new ModelAndView("layout", model);
+	}
+
+	@RequestMapping(value = "/tipo", method = RequestMethod.GET)
+	public ModelAndView listarPorStatus(
+			@RequestParam(value = "tipoEntradaObjeto", required = false) TipoEntradaObjeto tipo) {
+		ModelMap model = new ModelMap();
+		List<Objetos> objetos = gestaoObjetoService.listarPorTipoEntrada(tipo);
+		if (tipo == null) {
+			return new ModelAndView("redirect:/objetos/listar");
+		}
+		model.addAttribute("objetos", objetos);
+		model.addAttribute("conteudo", "objetos/listaObjetos");
+		return new ModelAndView("layout", model);
+	}
+
+	@ModelAttribute("objs")
+	public TipoEntradaObjeto[] tipo() {
+		return TipoEntradaObjeto.values();
 	}
 
 	@RequestMapping(value = "/editar/{id}", method = RequestMethod.GET)
