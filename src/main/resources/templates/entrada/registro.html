@@ -42,8 +42,10 @@
 						</div>
 						<div class="col-md-6">
 							<label class="form-label">Placa</label>
-							<input type="text" class="form-control" value="" th:field="*{placa}"
+							<input type="text" class="form-control" value="" id="placa" th:field="*{placa}"
 								placeholder="Insira a placa do veículo" required>
+							<span th:if="${#fields.hasErrors('placa')}" th:errors="*{placa}"
+								class="label label-danger"></span>
 						</div>
 						<div class="col-12">
 							<label class="form-label">Nome do motorista</label>

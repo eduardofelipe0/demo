@@ -9,11 +9,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,15 +53,16 @@ public class EntradaController {
 	}
 
 	@RequestMapping(value = "/registrar", method = RequestMethod.POST)
-	public String registrar(Entrada entrada, RedirectAttributes atributes) throws Exception {
+	public ModelAndView registrar(@Valid Entrada entrada, RedirectAttributes atributes, BindingResult result)
+			throws Exception {
 
-		try {
-			gestaoEntradaService.criar(entrada);
-			atributes.addFlashAttribute("message", "Entrada registrada com sucesso.");
-			return "redirect:/entradas/new";
-		} catch (Exception e) {
-			return "e";
+		if (result.hasErrors()) {
+			return new ModelAndView("layout", "conteudo", "/entradas/new");
 		}
+		gestaoEntradaService.criar(entrada);
+		atributes.addFlashAttribute("message", "Entrada registrada com sucesso.");
+		return new ModelAndView("redirect:/entradas/new");
+
 	}
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
@@ -143,7 +146,8 @@ public class EntradaController {
 		Entrada entrada = gestaoEntradaService.buscar(id);
 		if (entrada.getStatus() == StatusEntrada.FINALIZADA) {
 			throw new NegocioException("Esta entrada já foi finalizada, portanto não é mais possível editá-la.");
-			// atributes.addFlashAttribute("message", "Esta entrada já foi finalizada, portanto não é mais possível editá-la.");
+			// atributes.addFlashAttribute("message", "Esta entrada já foi finalizada,
+			// portanto não é mais possível editá-la.");
 		}
 		modelAndView.setViewName("entrada/registro");
 		modelAndView.addObject("entradaAtual", entrada);
@@ -158,7 +162,7 @@ public class EntradaController {
 		entradaRepository.delete(entrada);
 		atributes.addFlashAttribute("message", "Entrada removida com sucesso.");
 		return "redirect:/entradas/status?statusEntrada=ABERTA";
-		//return "redirect:/entradas/listar";
+		// return "redirect:/entradas/listar";
 	}
 
 	@RequestMapping(value = "/finalizar/{id}", method = RequestMethod.GET)
